@@ -9,6 +9,7 @@ extern crate serde_json;
 
 pub mod data;
 
+//Ignore mod test it was auto generated
 #[cfg(test)]
 mod tests {
     #[test]
