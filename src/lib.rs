@@ -6,8 +6,12 @@ extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
 
+extern crate sdl2;
+
+
 
 pub mod data;
+pub mod game;   
 
 //Ignore mod test it was auto generated
 #[cfg(test)]
