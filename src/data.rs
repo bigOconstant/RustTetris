@@ -5,7 +5,8 @@ use serde_json;
 pub struct GameDataS {
     pub fps: i32,
     pub width:i32,
-    pub height:i32
+    pub height:i32,
+    pub fullscreen:bool
 }
 
 pub fn load_data(location: String)-> GameDataS {
