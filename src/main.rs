@@ -1,9 +1,21 @@
+#[macro_use]
+extern crate lazy_static;
+//use std::sync::Mutex;
+
+ 
+
+
 extern crate gamedata;
 
-fn main() {
-    let game = gamedata::game::Game {
-        game_data: gamedata::data::load_data("./src/assets/data.json".to_string()), // gravityspeed:0.0
-    };
 
+fn main() {
+
+
+     let game = gamedata::game::Game {
+        
+     };
+
+    println!("Printing out game data first");
+   // println!("data width:{}",GAMEDATABLAH.width);
     game.run_game();
 }

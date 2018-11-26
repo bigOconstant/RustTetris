@@ -1,6 +1,7 @@
 use serde_json;
 use std;
 
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct GameDataS {
     pub fps: i32,
