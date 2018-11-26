@@ -55,7 +55,9 @@ impl Board {
           let mut v: Vec<Piece> =  Vec::new();
           for i in 0..10{
             
-            let thing : sdl2::rect::Rect = sdl2::rect::Rect::new(2+dimentions.left + (i * dimentions.unit_size), dimentions.top+2+(dimentions.unit_size * j), (dimentions.unit_size -3) as u32,(dimentions.unit_size -3) as u32);
+              let thing : sdl2::rect::Rect = sdl2::rect::Rect::new(2+dimentions.left +
+                      (i * dimentions.unit_size), dimentions.top+2+(dimentions.unit_size * j),
+                      (dimentions.unit_size -3) as u32,(dimentions.unit_size -3) as u32);
             let p:Piece = Piece{rect:thing,color:clr,occupied:false};
             v.push(p);
           }
@@ -97,8 +99,15 @@ impl Board {
       if self.do_i_fit(cloned_player) {
          self.delete_piece();
         self.players[0].incr_state();
-       }
+      }
 
+
+    }
+
+    pub fn switch_piece(&mut self) {
+        println!("Switching players here");
+        self.players[0] = self.players[1].clone();
+        self.players[1] = player::Player::new();
     }
 
     pub fn down_left(&mut self){
@@ -135,11 +144,13 @@ impl Board {
 
         for i in 1..11 {
          
-          canvas.draw_line(Point::new(dimentions.left+(i*dimentions.unit_size),dimentions.top),Point::new(dimentions.left+(i*dimentions.unit_size),dimentions.bottom));
+            canvas.draw_line(Point::new(dimentions.left+(i*dimentions.unit_size),dimentions.top),
+                             Point::new(dimentions.left+(i*dimentions.unit_size),dimentions.bottom));
         }
 
         for i in 1..19{
-          canvas.draw_line(Point::new(dimentions.left,dimentions.top + (i*dimentions.unit_size)),Point::new(dimentions.right,dimentions.top +(i*dimentions.unit_size)));          
+            canvas.draw_line(Point::new(dimentions.left,dimentions.top + (i*dimentions.unit_size)),
+                             Point::new(dimentions.right,dimentions.top +(i*dimentions.unit_size)));          
 
         }
     }
@@ -244,10 +255,7 @@ impl Board {
       self.draw_grid(canvas,dimentions);
 
       self.draw_a_player();
-
        self.draw_pieces(canvas);
-
-
     }
 
    

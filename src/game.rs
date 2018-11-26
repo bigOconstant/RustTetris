@@ -108,6 +108,12 @@ impl Game {
                        board.down_right();
                     }
                     Event::KeyDown {
+                        keycode: Some(Keycode::A),
+                        ..
+                    } => {
+                        board.switch_piece();
+                    }
+                    Event::KeyDown {
                         keycode: Some(Keycode::Up),
                         ..
                     } => {
