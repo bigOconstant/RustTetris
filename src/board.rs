@@ -84,19 +84,23 @@ impl Board {
       let mut cloned_player = self.players[0].clone();
       cloned_player.decr();
       
-
-       if self.do_i_fit(cloned_player) {
-         self.delete_piece();
-        self.players[0].decr();
+       if self.do_i_fit(&cloned_player) {
+          self.delete_piece();
+        if self.is_occupied(cloned_player){
+          self.players[0].decr();
+        }
        }
+       self.clear_rows();
         
     }
+
+
 
     pub fn up_key(&mut self) { 
       let mut cloned_player = self.players[0].clone();
       cloned_player.incr_state();
 
-      if self.do_i_fit(cloned_player) {
+      if self.do_i_fit(&cloned_player) {
          self.delete_piece();
         self.players[0].incr_state();
       }
@@ -115,9 +119,11 @@ impl Board {
      
       let mut cloned_player = self.players[0].clone();
       cloned_player.left();
-      if self.do_i_fit(cloned_player){
-        self.delete_piece();
-        self.players[0].left();
+      if self.do_i_fit(&cloned_player){
+         self.delete_piece();
+        if self.is_occupied(cloned_player){
+          self.players[0].left();
+        }
       }
     }
 
@@ -126,9 +132,11 @@ impl Board {
       
       let mut cloned_player = self.players[0].clone();
       cloned_player.right();
-      if self.do_i_fit(cloned_player){
-         self.delete_piece();
+      if self.do_i_fit(&cloned_player){
+          self.delete_piece();
+        if self.is_occupied(cloned_player){
          self.players[0].right();
+        }
       }
     }
 
@@ -180,15 +188,14 @@ impl Board {
         }
     }
 
-    pub fn do_i_fit(&self,play:player::Player) -> bool {
+    pub fn do_i_fit(&self,play:&player::Player) -> bool {
                   // Edit the board here
       let shape = play.get_shape();
       let col = play.col.clone();
       let row = play.row.clone();
-      
-      let mut icount = 0;
+
       for i in 0..shape.len(){
-        let mut jcount = 0;
+        
         for j in 0..shape[i].len(){
           
           if shape[i][j] == 1 {
@@ -201,12 +208,39 @@ impl Board {
             if rowAddress > 17 || rowAddress < 0 {
               return false;
             }
-          }
-           jcount = jcount + 1;
+          } 
         }
-         icount = icount + 1;
       }      
       return true;
+    }
+
+    pub fn is_occupied(&self,play:player::Player)->bool{
+        // do I fit should have already been called
+      let shape = play.get_shape();
+      let col = play.col.clone();
+      let row = play.row.clone();
+
+            for i in 0..shape.len(){
+        
+        for j in 0..shape[i].len(){
+          
+          if shape[i][j] == 1 {
+            let colAddress = ((j as i32)+col) as usize;
+            let rowAddress = ((i as i32)+row) as usize;
+
+            // Check if position is occupied on board
+
+            if(self.bmatrix[rowAddress][colAddress].occupied) {
+              println!("Returning false");
+              println!("self.bmatrix[rowAddress][colAddress]{}",self.bmatrix[rowAddress][colAddress].occupied);
+              return false
+            }
+          } 
+        }
+      }
+
+        println!("Returning true");
+        return true;
     }
 
      pub fn draw_a_player(&mut self) {
@@ -223,10 +257,8 @@ impl Board {
           if shape[i][j] == 1 {
             let colAddress = ((j as i32)+col) as usize;
             let rowAddress = ((i as i32)+row) as usize;
-
              self.bmatrix[rowAddress][colAddress].color = color;
-             self.bmatrix[rowAddress][colAddress].occupied = true;
-            
+             self.bmatrix[rowAddress][colAddress].occupied = true;   
           }
            jcount = jcount+1;
         }
@@ -234,6 +266,30 @@ impl Board {
       }
 
      }
+
+    pub fn clear_rows(&mut self){
+
+
+        
+       for  i in (0..self.bmatrix.len()) {
+         let mut full = true;
+         for j in (0..self.bmatrix[i].len()){
+           if !self.bmatrix[i][j].occupied  {
+            full = false;
+           }
+         }
+
+          if full {
+            println!("Found a full row");
+            for j in (0..self.bmatrix[i].len()){
+             self.bmatrix[i][j].occupied = false;
+             self.bmatrix[i][j].color = sdl2::pixels::Color::RGB(163, 187, 224);
+            }
+
+          }
+       
+     }
+    }
 
     pub fn draw_board(&mut self, canvas: &mut sdl2::render::WindowCanvas,tick:i32) {
 
