@@ -29,8 +29,7 @@ pub struct Board {
 impl Board {
 
     pub fn new() ->Board {
-      println!("Calling new board!");
-      let BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(163, 187, 224);
+      let BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
       let mut p = player::Player::new();
       let mut p2 = player::Player::new();
       let mut player_list :Vec<player::Player> = Vec::new();
@@ -86,7 +85,7 @@ impl Board {
       
        if self.do_i_fit(&cloned_player) {
           self.delete_piece();
-        if self.is_occupied(cloned_player){
+        if !self.is_occupied(cloned_player){
           self.players[0].decr();
         }
        }
@@ -102,10 +101,11 @@ impl Board {
 
       if self.do_i_fit(&cloned_player) {
          self.delete_piece();
-        self.players[0].incr_state();
+       if !self.is_occupied(cloned_player){
+          
+          self.players[0].incr_state();
+       }
       }
-
-
     }
 
     pub fn switch_piece(&mut self) {
@@ -121,7 +121,7 @@ impl Board {
       cloned_player.left();
       if self.do_i_fit(&cloned_player){
          self.delete_piece();
-        if self.is_occupied(cloned_player){
+        if !self.is_occupied(cloned_player){
           self.players[0].left();
         }
       }
@@ -134,7 +134,7 @@ impl Board {
       cloned_player.right();
       if self.do_i_fit(&cloned_player){
           self.delete_piece();
-        if self.is_occupied(cloned_player){
+        if !self.is_occupied(cloned_player){
          self.players[0].right();
         }
       }
@@ -164,7 +164,7 @@ impl Board {
     }
       fn delete_piece(&mut self) {
 
-        let BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(163, 187, 224);
+        let BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
         let shape = &self.players[0].get_shape();;
         let col = self.players[0].col;
         let row = self.players[0].row;
@@ -233,14 +233,14 @@ impl Board {
             if(self.bmatrix[rowAddress][colAddress].occupied) {
               println!("Returning false");
               println!("self.bmatrix[rowAddress][colAddress]{}",self.bmatrix[rowAddress][colAddress].occupied);
-              return false
+              return true
             }
           } 
         }
       }
 
         println!("Returning true");
-        return true;
+        return false;
     }
 
      pub fn draw_a_player(&mut self) {
@@ -283,7 +283,7 @@ impl Board {
             println!("Found a full row");
             for j in (0..self.bmatrix[i].len()){
              self.bmatrix[i][j].occupied = false;
-             self.bmatrix[i][j].color = sdl2::pixels::Color::RGB(163, 187, 224);
+             self.bmatrix[i][j].color = sdl2::pixels::Color::RGB(91, 89, 89);
             }
 
           }
@@ -302,7 +302,7 @@ impl Board {
         top:GAMEDATA.height - (19*(GAMEDATA.height / 20))
       };
 
-        let WHITE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(255, 255, 255);
+        let WHITE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(187, 190, 193);
 
 
         canvas.set_draw_color(WHITE);

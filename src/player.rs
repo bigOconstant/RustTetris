@@ -264,7 +264,7 @@ impl Player{
         }
 
 
-        let s: Vec<_> = s.iter().map(|&e| e.to_vec()).collect();
+        let s: Vec<_> =   s.iter().map(|&e| e.to_vec()).collect();
         let s2: Vec<_> = s2.iter().map(|&e| e.to_vec()).collect();
         let s3: Vec<_> = s3.iter().map(|&e| e.to_vec()).collect();
         let s4: Vec<_> = s4.iter().map(|&e| e.to_vec()).collect();

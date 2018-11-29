@@ -133,7 +133,7 @@ impl Game {
            
 
           canvas.clear();
-          canvas.set_draw_color(sdl2::pixels::Color::RGB(66, 71, 79));      
+          canvas.set_draw_color(sdl2::pixels::Color::RGB(38, 37, 37));      
           canvas.clear();       
           board.draw_board(&mut canvas,ticks);
         
