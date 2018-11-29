@@ -40,7 +40,6 @@ impl Player{
          let mut rng = rand::thread_rng();
          let shape_number =  rng.gen_range(0, 7);
          let mut clr: sdl2::pixels::Color = sdl2::pixels::Color::RGB(50,205,50);
-        println!("Creating random integer here!:{}",shape_number);
         let mut s  = [
             [0,1,0,0],
             [0,1,0,0],

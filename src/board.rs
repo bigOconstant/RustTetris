@@ -5,7 +5,6 @@ use player;
 //use sdl2::rect::Rect;
 use sdl2::rect::Point;
 
-
 pub struct Piece{
   pub rect:sdl2::rect::Rect,
   pub color:sdl2::pixels::Color,
@@ -109,7 +108,6 @@ impl Board {
     }
 
     pub fn switch_piece(&mut self) {
-        println!("Switching players here");
         self.players[0] = self.players[1].clone();
         self.players[1] = player::Player::new();
     }
@@ -231,15 +229,12 @@ impl Board {
             // Check if position is occupied on board
 
             if(self.bmatrix[rowAddress][colAddress].occupied) {
-              println!("Returning false");
-              println!("self.bmatrix[rowAddress][colAddress]{}",self.bmatrix[rowAddress][colAddress].occupied);
               return true
             }
           } 
         }
       }
 
-        println!("Returning true");
         return false;
     }
 
@@ -269,8 +264,6 @@ impl Board {
 
     pub fn clear_rows(&mut self){
 
-
-        
        for  i in (0..self.bmatrix.len()) {
          let mut full = true;
          for j in (0..self.bmatrix[i].len()){
@@ -280,7 +273,6 @@ impl Board {
          }
 
           if full {
-            println!("Found a full row");
             for j in (0..self.bmatrix[i].len()){
              self.bmatrix[i][j].occupied = false;
              self.bmatrix[i][j].color = sdl2::pixels::Color::RGB(91, 89, 89);

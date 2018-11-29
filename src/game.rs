@@ -49,7 +49,6 @@ impl Game {
         let midpoint = GAMEDATA.width /2;
 
         let unitSize = GAMEDATA.height / 27;
-        println!("UNitSize:{}",unitSize);
     
         let sdl_context = sdl2::init().unwrap();
         let video_subsystem = sdl_context.video().unwrap();
@@ -77,9 +76,6 @@ impl Game {
         let mut event_pump = sdl_context.event_pump().unwrap();
 
         let frame_delay = 1000 / GAMEDATA.fps as i32;
-
-        println!("Printing out game data in game file");
-//    println!("data{}",GAMEDATA.width);
 
         let mut running = true;
          let mut board = board::Board::new();
