@@ -5,6 +5,7 @@ use player;
 //use sdl2::rect::Rect;
 use sdl2::rect::Point;
 
+#[derive(Clone)]
 pub struct Piece{
   pub rect:sdl2::rect::Rect,
   pub color:sdl2::pixels::Color,
@@ -88,7 +89,7 @@ impl Board {
           self.players[0].decr();
         }
        }
-       self.clear_rows();
+       
         
     }
 
@@ -110,6 +111,7 @@ impl Board {
     pub fn switch_piece(&mut self) {
         self.players[0] = self.players[1].clone();
         self.players[1] = player::Player::new();
+        self.clear_rows();
     }
 
     pub fn down_left(&mut self){
@@ -263,21 +265,26 @@ impl Board {
      }
 
     pub fn clear_rows(&mut self){
-
+        let mut val = 0;
        for  i in (0..self.bmatrix.len()) {
          let mut full = true;
          for j in (0..self.bmatrix[i].len()){
            if !self.bmatrix[i][j].occupied  {
             full = false;
+            val = i;
            }
          }
-
           if full {
             for j in (0..self.bmatrix[i].len()){
              self.bmatrix[i][j].occupied = false;
              self.bmatrix[i][j].color = sdl2::pixels::Color::RGB(91, 89, 89);
             }
-
+            for k in (1..i+1).rev(){
+              for l in (0..self.bmatrix[k].len()){ 
+                self.bmatrix[k][l].color = self.bmatrix[k-1][l].color;
+                self.bmatrix[k][l].occupied = self.bmatrix[k-1][l].occupied;
+              }
+            }
           }
        
      }
