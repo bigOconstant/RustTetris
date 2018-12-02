@@ -1,3 +1,7 @@
+
+
+![Demot](https://raw.githubusercontent.com/camccar/RustTetris/master/src/assets/demo.jpg)
+
 # Rust Tetris
 
 This app aims to be a complete low level Tetris clone written in Rust and SDL2. It should have
