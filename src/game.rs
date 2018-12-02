@@ -19,8 +19,12 @@ use ::GAMEDATA;
 
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
-//use sdl2::rect::Point;
+use sdl2::rect::Point;
 use std::time::Duration;
+use sdl2::rect::Rect;
+use sdl2::render::TextureQuery;
+use sdl2::pixels::Color;
+
 
 /*
 pub fps: i32,
@@ -55,7 +59,7 @@ impl Game {
 
         let mut window = video_subsystem
             .window(
-                "SDL2",
+                "Tetris by Caleb",
                 GAMEDATA.width as u32,
                GAMEDATA.height as u32,
             )
@@ -89,6 +93,14 @@ impl Game {
                         ..
                     } => {
                         running = false;
+                    }
+                    Event::KeyDown {
+                        keycode: Some(Keycode::Space),
+                        ..
+                    } => {
+                      
+                       board.drop_piece();
+                        println!("Space Bar Pressed");
                     }
                     Event::KeyDown {
                         keycode: Some(Keycode::Left),
@@ -125,6 +137,7 @@ impl Game {
                 }
             }
 
+
             let ticks = timer.ticks() as i32;
            
 
@@ -134,6 +147,9 @@ impl Game {
           board.draw_board(&mut canvas,ticks);
         
           canvas.present();
+
+
+
 
  
             let frame_time = timer.ticks() as i32;

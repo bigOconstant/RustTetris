@@ -23,6 +23,7 @@ pub struct BDimentions{
 
 pub struct Board {
   pub  bmatrix:  Vec<Vec<Piece>>,
+  pub preview_matrix: Vec<Vec<Piece>>,
   pub players: Vec<player::Player>,
 }
 
@@ -30,12 +31,13 @@ impl Board {
 
     pub fn new() ->Board {
       let BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
+      let light_black: sdl2::pixels::Color = sdl2::pixels::Color::RGB(38, 37, 37);
+      
       let mut p = player::Player::new();
       let mut p2 = player::Player::new();
       let mut player_list :Vec<player::Player> = Vec::new();
       player_list.push(p2);
       player_list.push(p);
-
 
       let dimentions:BDimentions = BDimentions{
         midpoint: GAMEDATA.width /2,
@@ -46,36 +48,53 @@ impl Board {
         top:GAMEDATA.height - (19*(GAMEDATA.height / 20))
       };
 
-
       let clr : sdl2::pixels::Color = BLUE;
 
-      let mut vv : Vec<Vec<Piece>> = Vec::new();
+      let mut Board_Pieces : Vec<Vec<Piece>> = Vec::new();
             for j in 0..18{
-          let mut v: Vec<Piece> =  Vec::new();
+          let mut Row: Vec<Piece> =  Vec::new();
           for i in 0..10{
             
-              let thing : sdl2::rect::Rect = sdl2::rect::Rect::new(2+dimentions.left +
+              let positioned_retangle : sdl2::rect::Rect = sdl2::rect::Rect::new(2+dimentions.left +
                       (i * dimentions.unit_size), dimentions.top+2+(dimentions.unit_size * j),
                       (dimentions.unit_size -3) as u32,(dimentions.unit_size -3) as u32);
-            let p:Piece = Piece{rect:thing,color:clr,occupied:false};
-            v.push(p);
+            let p:Piece = Piece{rect:positioned_retangle,color:clr,occupied:false};
+            Row.push(p);
           }
-          vv.push(v);
+          Board_Pieces.push(Row);
+        }
+
+      let mut Preview_Board_Pieces: Vec<Vec<Piece>> = Vec::new();
+        for j in 0..4{
+          let mut Row: Vec<Piece> = Vec::new();
+          for i in 0..4{
+            let positioned_retangle_right : sdl2::rect::Rect = sdl2::rect::Rect::new(2+dimentions.right + dimentions.unit_size +
+                      (i * dimentions.unit_size), dimentions.top+2+(dimentions.unit_size * j),
+                      (dimentions.unit_size -3) as u32,(dimentions.unit_size -3) as u32);
+                      Row.push(Piece{rect:positioned_retangle_right,color:light_black,occupied:false})
+          }
+          Preview_Board_Pieces.push(Row);
+
         }
 
 
-      Board{bmatrix: vv,players:player_list}
+      Board{bmatrix: Board_Pieces,preview_matrix:Preview_Board_Pieces,players:player_list}
       
     }
 
     fn draw_pieces(&self,canvas: &mut sdl2::render::WindowCanvas){
           for i in &self.bmatrix{
-          for j in i{
-          canvas.set_draw_color(j.color);
-          canvas.fill_rect(j.rect);
+            for j in i{
+              canvas.set_draw_color(j.color);
+              canvas.fill_rect(j.rect);
+          }
+          for i in &self.preview_matrix{
+            for j in i{
+              canvas.set_draw_color(j.color);
+              canvas.fill_rect(j.rect);
           }
         }
-    }
+    }}
 
 
     pub fn down_key(&mut self){
@@ -88,12 +107,23 @@ impl Board {
         if !self.is_occupied(cloned_player){
           self.players[0].decr();
         }
-       }
-       
-        
+       }  
     }
+    pub fn drop_piece(&mut self) {
+      println!("hello!");
+       let mut cloned_player = self.players[0].clone();
+       cloned_player.decr();
+       self.delete_piece();
+       if self.do_i_fit(&cloned_player){
+         if !self.is_occupied(cloned_player){
+           self.down_key();
+           self.drop_piece();
+         }
+       } else{
+         return;
+       } 
 
-
+    }
 
     pub fn up_key(&mut self) { 
       let mut cloned_player = self.players[0].clone();
@@ -112,6 +142,8 @@ impl Board {
         self.players[0] = self.players[1].clone();
         self.players[1] = player::Player::new();
         self.clear_rows();
+        self.clear_future_board();
+
     }
 
     pub fn down_left(&mut self){
@@ -246,9 +278,9 @@ impl Board {
       let col = self.players[0].col;
       let row = self.players[0].row;
       let color = self.players[0].color;
-      let mut icount = 0;
+
       for i in 0..shape.len(){
-        let mut jcount = 0;
+       
         for j in 0..shape[i].len(){
           
           if shape[i][j] == 1 {
@@ -257,11 +289,43 @@ impl Board {
              self.bmatrix[rowAddress][colAddress].color = color;
              self.bmatrix[rowAddress][colAddress].occupied = true;   
           }
-           jcount = jcount+1;
         }
-         icount = icount +1;
+
       }
 
+     }
+
+     pub fn draw_future_player(&mut self){
+       let shape = &self.players[1].get_shape();
+      let col = self.players[1].col;
+      let row = self.players[1].row;
+      let color = self.players[1].color;
+
+      for i in 0..shape.len(){
+        
+        for j in 0..shape[i].len() {
+           if shape[i][j] == 1 {
+             self.preview_matrix[i][j].color = color;
+             self.preview_matrix[i][j].occupied = true;
+           }
+        }
+
+      }
+     }
+
+     pub fn clear_future_board(&mut self){
+       //let BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
+     
+       for i in 0..self.preview_matrix.len(){
+        
+        for j in 0..self.preview_matrix[i].len() {
+           
+             self.preview_matrix[i][j].color = sdl2::pixels::Color::RGB(38, 37, 37);
+             self.preview_matrix[i][j].occupied = false;
+           
+        }
+
+      }
      }
 
     pub fn clear_rows(&mut self){
@@ -301,15 +365,14 @@ impl Board {
         top:GAMEDATA.height - (19*(GAMEDATA.height / 20))
       };
 
-        let WHITE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(187, 190, 193);
+      let WHITE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(187, 190, 193);
 
 
-        canvas.set_draw_color(WHITE);
+       canvas.set_draw_color(WHITE);
 
-
-      self.draw_grid(canvas,dimentions);
-
-      self.draw_a_player();
+       self.draw_grid(canvas,dimentions);
+       self.draw_a_player();
+       self.draw_future_player();
        self.draw_pieces(canvas);
     }
 
