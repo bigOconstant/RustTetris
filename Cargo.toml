@@ -1,5 +1,5 @@
 [package]
-name = "gamedata"
+name = "rusttetris"
 version = "0.1.0"
 authors = ["Caleb McCarthy <caleb.a.mccarthy@gmail.com>"]
 

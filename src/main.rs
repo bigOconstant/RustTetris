@@ -2,17 +2,12 @@
 extern crate lazy_static;
 //use std::sync::Mutex;
 
-extern crate gamedata;
+extern crate rusttetris;
 
 
 fn main() {
 
 
-     let game = gamedata::game::Game {
-        
-     };
-
-    println!("Printing out game data first");
-   // println!("data width:{}",GAMEDATABLAH.width);
+     let game = rusttetris::game::Game {};
     game.run_game();
 }

@@ -98,9 +98,7 @@ impl Game {
                         keycode: Some(Keycode::Space),
                         ..
                     } => {
-                      
                        board.drop_piece();
-                        println!("Space Bar Pressed");
                     }
                     Event::KeyDown {
                         keycode: Some(Keycode::Left),

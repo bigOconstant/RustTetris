@@ -110,7 +110,6 @@ impl Board {
        }  
     }
     pub fn drop_piece(&mut self) {
-      println!("hello!");
        let mut cloned_player = self.players[0].clone();
        cloned_player.decr();
        self.delete_piece();
