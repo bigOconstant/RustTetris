@@ -21,6 +21,7 @@ You will need the latest stable version of rust. You will also need sdl2 develop
 sudo apt-get install libsdl2-dev
 ```
 
+
 ### Installing
 
 To build and run the project, cd into the src directory and type 
@@ -30,6 +31,13 @@ cargo run
 ```
 
 Cargo will go out and gather the needed dependencies, build and launch tetris.
+
+
+### Controlls
+
+Use the left, right, and down arrow keys for navigation.
+The up key rotates the piece. The space bar lands the piece at the bottom.
+Currently the a key creates a new piece but will be removed later.
 
 
 ## Built With
