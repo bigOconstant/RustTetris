@@ -5,7 +5,8 @@
 # Rust Tetris
 
 This app aims to be a complete low level Tetris clone written in Rust and SDL2. It should have
-Scoring and game play similar to the NES version of the game.
+Scoring and game play similar to the NES version of the game. The code is bassed off of the 
+typescript Tetris prototype I've previously written.Only with better game logic more consistent with the nes version of the game. You can see that version here [TypeScript Tetris](https://camccar.github.io/tetris/) 
 
 ## Getting Started
 
