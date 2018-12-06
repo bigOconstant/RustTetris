@@ -19,6 +19,7 @@ extern crate rand;
 pub mod data;
 pub mod game;
 pub mod board;
+pub mod startmenu;
 
 pub mod player;
 

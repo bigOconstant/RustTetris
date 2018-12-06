@@ -3,7 +3,7 @@ use std;
 use std::path::Path;
 ////use data::GameDataS;
 use board;
-
+use startmenu;
 use ::GAMEDATA;
 
 
@@ -82,8 +82,12 @@ impl Game {
         let frame_delay = 1000 / GAMEDATA.fps as i32;
 
         let mut running = true;
-         let mut board = board::Board::new();
+        let mut board = board::Board::new();
+        let startmenu = startmenu::Startmenu::new();
            // bb.initboard();
+           let mut start = true;
+           let mut playing = false;
+
         while running {
             for event in event_pump.poll_iter() {
                 match event {
@@ -98,38 +102,59 @@ impl Game {
                         keycode: Some(Keycode::Space),
                         ..
                     } => {
-                       board.drop_piece();
+                        if playing {
+                            board.drop_piece();
+                        }
                     }
                     Event::KeyDown {
                         keycode: Some(Keycode::Left),
                         ..
                     } => {
-                       board.down_left();
+                        if playing {
+                            board.down_left();
+                        }
                     }
 
                     Event::KeyDown {
                         keycode: Some(Keycode::Right),
                         ..
                     } => {
-                       board.down_right();
+                        if playing {
+                            board.down_right();
+                        }
                     }
                     Event::KeyDown {
                         keycode: Some(Keycode::A),
                         ..
                     } => {
-                        board.switch_piece();
+                        if playing {
+                            board.switch_piece();
+                        }
+                    }
+                    Event::KeyDown {
+                        keycode: Some(Keycode::Return),
+                        ..
+                    } => {
+                       if start{
+                        start = !start;
+                        playing = !playing;
+                       }
                     }
                     Event::KeyDown {
                         keycode: Some(Keycode::Up),
                         ..
                     } => {
-                        board.up_key();
+                        if playing {
+                            board.up_key();
+                        }
                     }
                     Event::KeyDown {
                         keycode: Some(Keycode::Down),
                         ..
                     } => {
+                        if playing {
                          board.down_key();
+                         }
                     }
                     _ => {}
                 }
@@ -141,9 +166,13 @@ impl Game {
 
           canvas.clear();
           canvas.set_draw_color(sdl2::pixels::Color::RGB(38, 37, 37));      
-          canvas.clear();       
-          board.draw_board(&mut canvas,ticks);
-        
+          canvas.clear();
+          
+          if !start{       
+            board.draw_board(&mut canvas,ticks);
+          }else{
+              startmenu.draw_menu(&mut canvas);
+          }
           canvas.present();
 
 
