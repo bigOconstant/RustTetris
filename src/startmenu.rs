@@ -91,7 +91,7 @@ impl Startmenu {
 
     let TextureQuery { width, height, .. } = texture.query();
 
-    let padding = 300;
+    let padding = 600;
     let padding2 = 400;
 
         let target = get_centered_rect(GAMEDATA.width as u32, GAMEDATA.height as u32, GAMEDATA.width as u32 - padding, GAMEDATA.height as u32 - padding);

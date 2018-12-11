@@ -114,6 +114,14 @@ impl Game {
                             board.down_left();
                         }
                     }
+                    Event::KeyDown {
+                        keycode: Some(Keycode::R),
+                        ..
+                    } => {
+                        if playing {
+                            board = board::Board::new();
+                        }
+                    }
 
                     Event::KeyDown {
                         keycode: Some(Keycode::Right),
