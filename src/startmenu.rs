@@ -80,7 +80,7 @@ impl Startmenu {
 
     // Load a font
     let ttf_context = sdl2::ttf::init().unwrap();
-    let mut font = ttf_context.load_font("assets/zig_font.ttf", 128).unwrap();
+    let mut font = ttf_context.load_font("src/assets/zig_font.ttf", 128).unwrap();
     font.set_style(sdl2::ttf::STYLE_BOLD);
     let surface = font.render("Tetris Press Enter").blended(Green).unwrap();
     let texture = texture_creator.create_texture_from_surface(&surface).unwrap();

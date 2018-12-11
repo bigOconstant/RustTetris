@@ -71,7 +71,7 @@ impl Game {
             window.set_fullscreen(sdl2::video::FullscreenType::True);
         }
 
-        let icon = sdl2::surface::Surface::load_bmp(Path::new("assets/tetris.bmp")).unwrap();
+        let icon = sdl2::surface::Surface::load_bmp(Path::new("src/assets/tetris.bmp")).unwrap();
         window.set_icon(icon);
         let mut canvas = window.into_canvas().accelerated().build().unwrap();
         let texture_creator = canvas.texture_creator();

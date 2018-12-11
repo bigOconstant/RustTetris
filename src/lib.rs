@@ -9,7 +9,7 @@ extern crate lazy_static;
 //use std::sync::Mutex;
 
     lazy_static! {
-   pub static ref GAMEDATA: data::GameDataS = data::load_data("assets/data.json".to_string());
+   pub static ref GAMEDATA: data::GameDataS = data::load_data("src/assets/data.json".to_string());
 }
 
 extern crate sdl2;
