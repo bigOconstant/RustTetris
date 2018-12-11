@@ -1,6 +1,6 @@
 
 
-![Demot](https://raw.githubusercontent.com/camccar/RustTetris/master/src/assets/demo.jpg)
+![Demo](https://raw.githubusercontent.com/camccar/RustTetris/master/src/assets/demo.jpg)
 
 # Rust Tetris
 
@@ -10,16 +10,17 @@ typescript Tetris prototype I've previously written.Only with better game logic 
 
 ## Getting Started
 
-Currently only Ubuntu is supported, but it should be fairly 
-easy to port to other platforms. See the Rust Cargo package for sdl to get windows instructions.
+Currently Ubuntu 18.04 and Windows are supported. Because thats what I'm testing on.
 
 ### Prerequisites
 
-You will need the latest stable version of rust. You will also need sdl2 development libraries. which you can install with.
+You will need the latest stable version of rust. You will also need sdl2 development libraries if you are on ubuntu. which you can install with.
 
 ```
 sudo apt-get install libsdl2-dev
 ```
+
+Windows users may use the build.rs script in the main directory and the included sdl libraries.
 
 
 ### Installing
@@ -37,6 +38,7 @@ Cargo will go out and gather the needed dependencies, build and launch tetris.
 Use the left, right, and down arrow keys for navigation.
 The up key rotates the piece. The space bar lands the piece at the bottom.
 Currently the a key creates a new piece but will be removed later.
+The r key resets the board.
 
 ## Built With
 
@@ -48,7 +50,7 @@ Currently the a key creates a new piece but will be removed later.
 
 ## Authors
 
-* **Caleb McCarthy** - *Currently Only Dev* - [Web Site](http://calebmccarthy.io)
+* **Caleb McCarthy** - [Web Site](http://calebmccarthy.io)
 .
 
 ## Acknowledgments
