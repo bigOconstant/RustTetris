@@ -55,5 +55,5 @@ The r key resets the board.
 
 ## Acknowledgments
 
-* Comming soon...
+* [Colin Fahey's great Tetris documentation](https://www.colinfahey.com/tetris/tetris.html)
 
