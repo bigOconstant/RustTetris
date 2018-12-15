@@ -3,19 +3,11 @@ use std;
 use std::path::Path;
 ////use data::GameDataS;
 use board;
+use level;
 use startmenu;
 use ::GAMEDATA;
 
 
-
-
-//use std::env;
-//use std::fs;
-//use std::io::prelude::*;
-
-//use std::process;
-//use  std::thread;
-//use sdl2::rect::Rect;
 
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
@@ -46,7 +38,8 @@ impl Game {
         //48 by 27
         //Mid point is 24. 
         // Each square is 1 by 1
-
+        let blah  = level::Level{};
+        blah.i_worked();
         let sectionwidth = GAMEDATA.width / 3;
         let sectionheight = GAMEDATA.height / 12;
 
@@ -177,7 +170,8 @@ impl Game {
           canvas.clear();
           
           if !start{       
-            board.draw_board(&mut canvas,ticks);
+              board.draw_board(&mut canvas,ticks);
+              blah.draw_menu(&mut canvas);
           }else{
               startmenu.draw_menu(&mut canvas);
           }

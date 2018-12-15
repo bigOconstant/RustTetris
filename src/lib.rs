@@ -8,7 +8,7 @@ extern crate lazy_static;
 
 //use std::sync::Mutex;
 
-    lazy_static! {
+   lazy_static! {
    pub static ref GAMEDATA: data::GameDataS = data::load_data("src/assets/data.json".to_string());
 }
 
@@ -20,6 +20,7 @@ pub mod data;
 pub mod game;
 pub mod board;
 pub mod startmenu;
+pub mod level;
 
 pub mod player;
 
