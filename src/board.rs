@@ -2,6 +2,7 @@
 extern crate sdl2;
 use ::GAMEDATA;
 use player;
+use level;
 //use sdl2::rect::Rect;
 use sdl2::rect::Point;
 
@@ -25,14 +26,15 @@ pub struct Board {
   pub  bmatrix:  Vec<Vec<Piece>>,
   pub preview_matrix: Vec<Vec<Piece>>,
   pub players: Vec<player::Player>,
+  pub level_text: level::Level,
 }
 
 impl Board {
 
-    pub fn new() ->Board {
+    pub fn new() -> Board {
+
       let BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
       let light_black: sdl2::pixels::Color = sdl2::pixels::Color::RGB(38, 37, 37);
-      
       let mut p = player::Player::new();
       let mut p2 = player::Player::new();
       let mut player_list :Vec<player::Player> = Vec::new();
@@ -78,7 +80,7 @@ impl Board {
         }
 
 
-      Board{bmatrix: Board_Pieces,preview_matrix:Preview_Board_Pieces,players:player_list}
+      Board{bmatrix: Board_Pieces,preview_matrix:Preview_Board_Pieces,players:player_list,level_text:level::Level::new()}
       
     }
 
@@ -373,6 +375,7 @@ impl Board {
        self.draw_a_player();
        self.draw_future_player();
        self.draw_pieces(canvas);
+       self.level_text.draw_menu(canvas);
     }
 
    

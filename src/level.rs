@@ -30,11 +30,10 @@ pub struct BDimentions {
 
 impl Level {
 
-     
-
-    pub fn i_worked(&self) {
-
+    pub fn new() ->Level{
+        Level{}
     }
+
 
     pub fn draw_menu(&self,canvas: &mut sdl2::render::WindowCanvas) {
         // Draw some retangles here!    
