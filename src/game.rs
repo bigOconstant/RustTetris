@@ -38,7 +38,8 @@ impl Game {
         //48 by 27
         //Mid point is 24. 
         // Each square is 1 by 1
-       
+        let mut falling = false;
+        let mut actualLevel = 1;
 
         let sectionwidth = GAMEDATA.width / 3;
         let sectionheight = GAMEDATA.height / 12;
@@ -70,6 +71,7 @@ impl Game {
         let texture_creator = canvas.texture_creator();
 
         let mut timer = sdl_context.timer().unwrap();
+        let mut fall_time = timer.ticks() as i32;
         let mut event_pump = sdl_context.event_pump().unwrap();
 
         let frame_delay = 1000 / GAMEDATA.fps as i32;
@@ -168,9 +170,21 @@ impl Game {
           canvas.clear();
           canvas.set_draw_color(sdl2::pixels::Color::RGB(38, 37, 37));      
           canvas.clear();
-          
+         
+          // Calculate level speed
+          let iterationDelay = ((11.0 - actualLevel as f32 ) as f32 * 0.05) * 1000.0;
+
+
+          if (ticks - fall_time) as f32 > iterationDelay {    
+              falling = true;
+              fall_time = ticks;
+             
+          }else {
+              falling = false;
+              
+          }
           if !start{       
-              board.draw_board(&mut canvas,ticks);
+              board.draw_board(&mut canvas,falling);
              
           }else{
               startmenu.draw_menu(&mut canvas);

@@ -355,8 +355,13 @@ impl Board {
      }
     }
 
-    pub fn draw_board(&mut self, canvas: &mut sdl2::render::WindowCanvas,tick:i32) {
+    pub fn draw_board(&mut self, canvas: &mut sdl2::render::WindowCanvas,falling:bool) {
 
+        if falling {
+          self.down_key();
+        }
+
+     
         let dimentions:BDimentions = BDimentions{
         midpoint: GAMEDATA.width /2,
         unit_size:GAMEDATA.height / 20,
