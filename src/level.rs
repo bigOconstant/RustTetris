@@ -35,7 +35,7 @@ impl Level {
     }
 
 
-    pub fn draw_menu(&self,canvas: &mut sdl2::render::WindowCanvas) {
+    pub fn draw_level(&self,canvas: &mut sdl2::render::WindowCanvas,level_string:String) {
         // Draw some retangles here!    
         let dimentions:BDimentions = BDimentions{
             midpoint: GAMEDATA.width /2,
@@ -56,7 +56,7 @@ impl Level {
         // Load a font
         let ttf_context = sdl2::ttf::init().unwrap();
         let mut font = ttf_context.load_font("src/assets/zig_font.ttf", 128).unwrap();
-        let surface = font.render("Level 1").blended(Green).unwrap();
+        let surface = font.render(&level_string).blended(Green).unwrap();
         let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
 
         

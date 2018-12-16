@@ -172,7 +172,25 @@ impl Game {
           canvas.clear();
          
           // Calculate level speed
-          let iterationDelay = ((11.0 - actualLevel as f32 ) as f32 * 0.05) * 1000.0;
+        /* calculate level, and speed*/
+            let mut earnedLevel = 1;
+            if board.rows_cleared <= 0
+            {
+                earnedLevel = 1;
+            }
+            else if (board.rows_cleared >= 1) && (board.rows_cleared <= 90)
+            {
+                earnedLevel = 1 + ((board.rows_cleared - 1) / 10);
+            }
+            else if board.rows_cleared >= 91
+            {
+                earnedLevel = 10;
+            }
+            //board.level_text = "level"
+
+            
+          let iterationDelay = ((11.0 - earnedLevel as f32 ) as f32 * 0.05) * 1000.0;
+          
 
 
           if (ticks - fall_time) as f32 > iterationDelay {    
@@ -184,7 +202,7 @@ impl Game {
               
           }
           if !start{       
-              board.draw_board(&mut canvas,falling);
+              board.draw_board(&mut canvas,falling,earnedLevel);
              
           }else{
               startmenu.draw_menu(&mut canvas);

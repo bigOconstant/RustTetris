@@ -27,6 +27,7 @@ pub struct Board {
   pub preview_matrix: Vec<Vec<Piece>>,
   pub players: Vec<player::Player>,
   pub level_text: level::Level,
+  pub rows_cleared:i32,
 }
 
 impl Board {
@@ -80,7 +81,7 @@ impl Board {
         }
 
 
-      Board{bmatrix: Board_Pieces,preview_matrix:Preview_Board_Pieces,players:player_list,level_text:level::Level::new()}
+      Board{bmatrix: Board_Pieces,preview_matrix:Preview_Board_Pieces,players:player_list,level_text:level::Level::new(),rows_cleared:0}
       
     }
 
@@ -108,7 +109,12 @@ impl Board {
           self.delete_piece();
         if !self.is_occupied(cloned_player){
           self.players[0].decr();
+        }else{
+         self.draw_a_player();
+         self.switch_piece();// end turn 
         }
+       }else{
+         self.switch_piece();//end turn
        }  
     }
     pub fn drop_piece(&mut self) {
@@ -340,6 +346,7 @@ impl Board {
            }
          }
           if full {
+            self.rows_cleared +=1;
             for j in (0..self.bmatrix[i].len()){
              self.bmatrix[i][j].occupied = false;
              self.bmatrix[i][j].color = sdl2::pixels::Color::RGB(91, 89, 89);
@@ -355,7 +362,7 @@ impl Board {
      }
     }
 
-    pub fn draw_board(&mut self, canvas: &mut sdl2::render::WindowCanvas,falling:bool) {
+    pub fn draw_board(&mut self, canvas: &mut sdl2::render::WindowCanvas,falling:bool,level_number:i32) {
 
         if falling {
           self.down_key();
@@ -380,7 +387,9 @@ impl Board {
        self.draw_a_player();
        self.draw_future_player();
        self.draw_pieces(canvas);
-       self.level_text.draw_menu(canvas);
+       let mut level = String::from("Level ");
+       level.push_str(&level_number.to_string());
+       self.level_text.draw_level(canvas,level);
     }
 
    
