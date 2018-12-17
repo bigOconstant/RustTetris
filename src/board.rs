@@ -127,6 +127,7 @@ impl Board {
            self.drop_piece();
          }
        } else{
+         self.draw_a_player();
          return;
        } 
 
@@ -153,9 +154,7 @@ impl Board {
 
     }
 
-    pub fn down_left(&mut self){
-      
-     
+    pub fn down_left(&mut self){   
       let mut cloned_player = self.players[0].clone();
       cloned_player.left();
       if self.do_i_fit(&cloned_player){
@@ -167,8 +166,6 @@ impl Board {
     }
 
     pub fn down_right(&mut self){
-      
-      
       let mut cloned_player = self.players[0].clone();
       cloned_player.right();
       if self.do_i_fit(&cloned_player){
@@ -202,7 +199,6 @@ impl Board {
         }
     }
       fn delete_piece(&mut self) {
-
         let BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
         let shape = &self.players[0].get_shape();;
         let col = self.players[0].col;
@@ -228,7 +224,6 @@ impl Board {
     }
 
     pub fn do_i_fit(&self,play:&player::Player) -> bool {
-                  // Edit the board here
       let shape = play.get_shape();
       let col = play.col.clone();
       let row = play.row.clone();
@@ -325,8 +320,7 @@ impl Board {
      
        for i in 0..self.preview_matrix.len(){
         
-        for j in 0..self.preview_matrix[i].len() {
-           
+        for j in 0..self.preview_matrix[i].len() { 
              self.preview_matrix[i][j].color = sdl2::pixels::Color::RGB(38, 37, 37);
              self.preview_matrix[i][j].occupied = false;
            
@@ -337,6 +331,7 @@ impl Board {
 
     pub fn clear_rows(&mut self){
         let mut val = 0;
+        let mut scoring_rows_cleared = 0;
        for  i in (0..self.bmatrix.len()) {
          let mut full = true;
          for j in (0..self.bmatrix[i].len()){
@@ -346,6 +341,7 @@ impl Board {
            }
          }
           if full {
+            scoring_rows_cleared +=1;
             self.rows_cleared +=1;
             for j in (0..self.bmatrix[i].len()){
              self.bmatrix[i][j].occupied = false;
@@ -360,6 +356,9 @@ impl Board {
           }
        
      }
+     // add to score
+     //40 * (n + 1)	100 * (n + 1)	300 * (n + 1)	1200 * (n + 1)
+     println!("lines cleared:{}",scoring_rows_cleared);
     }
 
     pub fn draw_board(&mut self, canvas: &mut sdl2::render::WindowCanvas,falling:bool,level_number:i32) {

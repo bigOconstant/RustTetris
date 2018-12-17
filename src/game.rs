@@ -187,7 +187,7 @@ impl Game {
                 earnedLevel = 10;
             }
             //board.level_text = "level"
-
+            //earnedLevel = 15;
             
           let iterationDelay = ((11.0 - earnedLevel as f32 ) as f32 * 0.05) * 1000.0;
           
