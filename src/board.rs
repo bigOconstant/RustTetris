@@ -14,7 +14,7 @@ pub struct Piece{
 
 }
 pub struct BDimentions{
-  midpoint:i32,
+ // midpoint:i32,
   unit_size:i32,
   left:i32,
   right:i32,
@@ -35,16 +35,16 @@ impl Board {
 
     pub fn new() -> Board {
 
-      let BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
+      let blue: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
       let light_black: sdl2::pixels::Color = sdl2::pixels::Color::RGB(38, 37, 37);
-      let mut p = player::Player::new();
-      let mut p2 = player::Player::new();
+      let p = player::Player::new();
+      let p2 = player::Player::new();
       let mut player_list :Vec<player::Player> = Vec::new();
       player_list.push(p2);
       player_list.push(p);
 
       let dimentions:BDimentions = BDimentions{
-        midpoint: GAMEDATA.width /2,
+        //midpoint: GAMEDATA.width /2,
         unit_size:GAMEDATA.height / 20,
         left:(GAMEDATA.width /2) - (5 * (GAMEDATA.height / 20)),
         right:(GAMEDATA.width /2) + (5 * (GAMEDATA.height / 20)),
@@ -52,37 +52,37 @@ impl Board {
         top:GAMEDATA.height - (19*(GAMEDATA.height / 20))
       };
 
-      let clr : sdl2::pixels::Color = BLUE;
+      let clr : sdl2::pixels::Color = blue;
 
-      let mut Board_Pieces : Vec<Vec<Piece>> = Vec::new();
+      let mut board_pieces : Vec<Vec<Piece>> = Vec::new();
             for j in 0..18{
-          let mut Row: Vec<Piece> =  Vec::new();
+          let mut row: Vec<Piece> =  Vec::new();
           for i in 0..10{
             
               let positioned_retangle : sdl2::rect::Rect = sdl2::rect::Rect::new(2+dimentions.left +
                       (i * dimentions.unit_size), dimentions.top+2+(dimentions.unit_size * j),
                       (dimentions.unit_size -3) as u32,(dimentions.unit_size -3) as u32);
             let p:Piece = Piece{rect:positioned_retangle,color:clr,occupied:false};
-            Row.push(p);
+            row.push(p);
           }
-          Board_Pieces.push(Row);
+          board_pieces.push(row);
         }
 
-      let mut Preview_Board_Pieces: Vec<Vec<Piece>> = Vec::new();
+      let mut preview_board_pieces: Vec<Vec<Piece>> = Vec::new();
         for j in 0..4{
-          let mut Row: Vec<Piece> = Vec::new();
+          let mut row: Vec<Piece> = Vec::new();
           for i in 0..4{
             let positioned_retangle_right : sdl2::rect::Rect = sdl2::rect::Rect::new(2+dimentions.right + dimentions.unit_size +
                       (i * dimentions.unit_size), dimentions.top+2+(dimentions.unit_size * j),
                       (dimentions.unit_size -3) as u32,(dimentions.unit_size -3) as u32);
-                      Row.push(Piece{rect:positioned_retangle_right,color:light_black,occupied:false})
+                      row.push(Piece{rect:positioned_retangle_right,color:light_black,occupied:false})
           }
-          Preview_Board_Pieces.push(Row);
+          preview_board_pieces.push(row);
 
         }
 
 
-      Board{bmatrix: Board_Pieces,preview_matrix:Preview_Board_Pieces,players:player_list,level_text:level::Level::new(),rows_cleared:0,score:0}
+      Board{bmatrix: board_pieces,preview_matrix:preview_board_pieces,players:player_list,level_text:level::Level::new(),rows_cleared:0,score:0}
       
     }
 
@@ -90,12 +90,12 @@ impl Board {
           for i in &self.bmatrix{
             for j in i{
               canvas.set_draw_color(j.color);
-              canvas.fill_rect(j.rect);
+              canvas.fill_rect(j.rect).expect("could fill rectangle");;
           }
           for i in &self.preview_matrix{
             for j in i{
               canvas.set_draw_color(j.color);
-              canvas.fill_rect(j.rect);
+              canvas.fill_rect(j.rect).expect("could fill rectangle");
           }
         }
     }}
@@ -179,28 +179,28 @@ impl Board {
 
     fn draw_grid(&self,canvas: &mut sdl2::render::WindowCanvas,dimentions: BDimentions){
          //Draw side lines
-        canvas.draw_line(Point::new(dimentions.left,dimentions.top),Point::new(dimentions.left,dimentions.bottom));
-        canvas.draw_line(Point::new(dimentions.right,dimentions.top),Point::new(dimentions.right,dimentions.bottom));
+        canvas.draw_line(Point::new(dimentions.left,dimentions.top),Point::new(dimentions.left,dimentions.bottom)).expect("could not draw line");;
+        canvas.draw_line(Point::new(dimentions.right,dimentions.top),Point::new(dimentions.right,dimentions.bottom)).expect("could not draw line");;
           //draw top and bottom
 
-        canvas.draw_line(Point::new(dimentions.left,dimentions.top),Point::new(dimentions.right,dimentions.top));         
-        canvas.draw_line(Point::new(dimentions.left,dimentions.bottom),Point::new(dimentions.right,dimentions.bottom));
+        canvas.draw_line(Point::new(dimentions.left,dimentions.top),Point::new(dimentions.right,dimentions.top)).expect("could not draw line");;         
+        canvas.draw_line(Point::new(dimentions.left,dimentions.bottom),Point::new(dimentions.right,dimentions.bottom)).expect("could not draw line");;
 
 
         for i in 1..11 {
          
             canvas.draw_line(Point::new(dimentions.left+(i*dimentions.unit_size),dimentions.top),
-                             Point::new(dimentions.left+(i*dimentions.unit_size),dimentions.bottom));
+                             Point::new(dimentions.left+(i*dimentions.unit_size),dimentions.bottom)).expect("could not draw line");;
         }
 
         for i in 1..19{
             canvas.draw_line(Point::new(dimentions.left,dimentions.top + (i*dimentions.unit_size)),
-                             Point::new(dimentions.right,dimentions.top +(i*dimentions.unit_size)));          
+                             Point::new(dimentions.right,dimentions.top +(i*dimentions.unit_size))).expect("could not draw line");          
 
         }
     }
       fn delete_piece(&mut self) {
-        let BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
+        let blue: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
         let shape = &self.players[0].get_shape();;
         let col = self.players[0].col;
         let row = self.players[0].row;
@@ -211,11 +211,11 @@ impl Board {
           for j in 0..shape[i].len(){
             
             if shape[i][j] == 1 {
-              let colAddress = ((j as i32)+col) as usize;
-              let rowAddress = ((i as i32)+row) as usize;
+              let col_address = ((j as i32)+col) as usize;
+              let row_address = ((i as i32)+row) as usize;
 
-              self.bmatrix[rowAddress][colAddress].color = BLUE;
-                  self.bmatrix[rowAddress][colAddress].occupied = false;
+              self.bmatrix[row_address][col_address].color = blue;
+                  self.bmatrix[row_address][col_address].occupied = false;
               
             }
             jcount = jcount+1;
@@ -234,13 +234,13 @@ impl Board {
         for j in 0..shape[i].len(){
           
           if shape[i][j] == 1 {
-            let colAddress = ((j as i32)+col) as usize;
-            let rowAddress = ((i as i32)+row) as usize;
+            let col_address = ((j as i32)+col) as usize;
+            let row_address = ((i as i32)+row) as usize;
 
-            if colAddress > 9 || colAddress < 0 {
+            if col_address > 9 {
               return false;
             }
-            if rowAddress > 17 || rowAddress < 0 {
+            if row_address > 17  {
               return false;
             }
           } 
@@ -260,12 +260,12 @@ impl Board {
         for j in 0..shape[i].len(){
           
           if shape[i][j] == 1 {
-            let colAddress = ((j as i32)+col) as usize;
-            let rowAddress = ((i as i32)+row) as usize;
+            let col_address = ((j as i32)+col) as usize;
+            let row_address = ((i as i32)+row) as usize;
 
             // Check if position is occupied on board
 
-            if(self.bmatrix[rowAddress][colAddress].occupied) {
+            if self.bmatrix[row_address][col_address].occupied {
               return true
             }
           } 
@@ -287,10 +287,10 @@ impl Board {
         for j in 0..shape[i].len(){
           
           if shape[i][j] == 1 {
-            let colAddress = ((j as i32)+col) as usize;
-            let rowAddress = ((i as i32)+row) as usize;
-             self.bmatrix[rowAddress][colAddress].color = color;
-             self.bmatrix[rowAddress][colAddress].occupied = true;   
+            let col_address = ((j as i32)+col) as usize;
+            let row_address = ((i as i32)+row) as usize;
+             self.bmatrix[row_address][col_address].color = color;
+             self.bmatrix[row_address][col_address].occupied = true;   
           }
         }
 
@@ -317,8 +317,6 @@ impl Board {
      }
 
      pub fn clear_future_board(&mut self){
-       //let BLUE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
-     
        for i in 0..self.preview_matrix.len(){
         
         for j in 0..self.preview_matrix[i].len() { 
@@ -331,52 +329,50 @@ impl Board {
      }
 
     pub fn clear_rows(&mut self){
-        let mut val = 0;
         let mut scoring_rows_cleared = 0;
-       for  i in (0..self.bmatrix.len()) {
+       for  i in 0..self.bmatrix.len() {
          let mut full = true;
-         for j in (0..self.bmatrix[i].len()){
+         for j in 0..self.bmatrix[i].len(){
            if !self.bmatrix[i][j].occupied  {
             full = false;
-            val = i;
            }
          }
           if full {
             scoring_rows_cleared +=1;
             self.rows_cleared +=1;
-            for j in (0..self.bmatrix[i].len()){
+            for j in 0..self.bmatrix[i].len(){
              self.bmatrix[i][j].occupied = false;
              self.bmatrix[i][j].color = sdl2::pixels::Color::RGB(91, 89, 89);
             }
             for k in (1..i+1).rev(){
-              for l in (0..self.bmatrix[k].len()){ 
+              for l in 0..self.bmatrix[k].len() { 
                 self.bmatrix[k][l].color = self.bmatrix[k-1][l].color;
                 self.bmatrix[k][l].occupied = self.bmatrix[k-1][l].occupied;
               }
             }
           }
      }
-      self.calculate_score_of_Lines(scoring_rows_cleared);
+      self.calculate_score_of_lines(scoring_rows_cleared);
      println!("{} lines cleared current score:{}",scoring_rows_cleared,self.score);
     }
 
     pub fn calculate_level(&mut self)-> i32 {
-            let mut earnedLevel = 1;
+            let mut earned_level = 1;
             if self.rows_cleared <= 0
             {
-                earnedLevel = 1;
+                earned_level = 1;
             }
             else if (self.rows_cleared >= 1) && (self.rows_cleared <= 90)
             {
-                earnedLevel = 1 + ((self.rows_cleared - 1) / 10);
+                earned_level = 1 + ((self.rows_cleared - 1) / 10);
             }
             else if self.rows_cleared >= 91
             {
-                earnedLevel = 10;
+                earned_level = 10;
             }
-      earnedLevel
+      earned_level
     }
-    pub fn calculate_score_of_Lines(&mut self,lines_cleared:i32){
+    pub fn calculate_score_of_lines(&mut self,lines_cleared:i32){
       let level = self.calculate_level();
       let score = match lines_cleared {
         1 =>  40 * (level + 1),
@@ -394,7 +390,7 @@ impl Board {
           self.down_key();
         }
         let dimentions:BDimentions = BDimentions{
-        midpoint: GAMEDATA.width /2,
+        //midpoint: GAMEDATA.width /2,
         unit_size:GAMEDATA.height / 20,
         left:(GAMEDATA.width /2) - (5 * (GAMEDATA.height / 20)),
         right:(GAMEDATA.width /2) + (5 * (GAMEDATA.height / 20)),
@@ -402,11 +398,10 @@ impl Board {
         top:GAMEDATA.height - (19*(GAMEDATA.height / 20))
       };
 
-      let WHITE: sdl2::pixels::Color = sdl2::pixels::Color::RGB(187, 190, 193);
+      let white: sdl2::pixels::Color = sdl2::pixels::Color::RGB(187, 190, 193);
 
 
-       canvas.set_draw_color(WHITE);
-
+       canvas.set_draw_color(white);
        self.draw_grid(canvas,dimentions);
        self.draw_a_player();
        self.draw_future_player();

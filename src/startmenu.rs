@@ -1,20 +1,12 @@
 extern crate sdl2;
 use ::GAMEDATA;
-use player;
 use sdl2::rect::Rect;
-use sdl2::rect::Point;
-use sdl2::event::Event;
-use sdl2::keyboard::Keycode;
 use sdl2::render::TextureQuery;
-use sdl2::pixels::Color;
-use sdl2::ttf::{Font, Sdl2TtfContext};
+
 
 pub struct BDimentions{
-  midpoint:i32,
   unit_size:i32,
   left:i32,
-  right:i32,
-  bottom:i32,
   top:i32,
 }
 
@@ -61,17 +53,14 @@ impl Startmenu {
     pub fn draw_menu(&self,canvas: &mut sdl2::render::WindowCanvas){
         
         let dimentions:BDimentions = BDimentions{
-        midpoint: GAMEDATA.width /2,
         unit_size:GAMEDATA.height / 20,
         left:(GAMEDATA.width /2) - (5 * (GAMEDATA.height / 20)),
-        right:(GAMEDATA.width /2) + (5 * (GAMEDATA.height / 20)),
-        bottom:GAMEDATA.height - (1*(GAMEDATA.height / 20)),
         top:GAMEDATA.height - (19*(GAMEDATA.height / 20))
       };
 
 
-        let Yellow: sdl2::pixels::Color = sdl2::pixels::Color::RGB(226, 244, 66);
-        let Green: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0, 179, 0);
+        let yellow: sdl2::pixels::Color = sdl2::pixels::Color::RGB(226, 244, 66);
+        let green: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0, 179, 0);
         
         let positioned_retangle : sdl2::rect::Rect = sdl2::rect::Rect::new(dimentions.left +
                       (dimentions.unit_size), dimentions.top+(dimentions.unit_size),
@@ -83,11 +72,11 @@ impl Startmenu {
     let ttf_context = sdl2::ttf::init().unwrap();
     let mut font = ttf_context.load_font("src/assets/zig_font.ttf", 128).unwrap();
     font.set_style(sdl2::ttf::STYLE_BOLD);
-    let surface = font.render("Tetris Press Enter").blended(Green).unwrap();
+    let surface = font.render("Tetris Press Enter").blended(green).unwrap();
     let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
 
-    let startSurface = font.render("Press Enter").blended(Green).unwrap();
-    let texture2 = texture_creator.create_texture_from_surface(&startSurface).unwrap();
+    let start_surface = font.render("Press Enter").blended(green).unwrap();
+    let texture2 = texture_creator.create_texture_from_surface(&start_surface).unwrap();
 
 
     let TextureQuery { width, height, .. } = texture.query();
@@ -98,7 +87,7 @@ impl Startmenu {
         let target = get_centered_rect(GAMEDATA.width as u32, GAMEDATA.height as u32, GAMEDATA.width as u32 - padding, GAMEDATA.height as u32 - padding);
         //let target2 = get_centered_rect(GAMEDATA.width as u32, (GAMEDATA.height+200) as u32, GAMEDATA.width as u32 - padding2, (GAMEDATA.height+200) as u32 - padding2);
         
-        canvas.set_draw_color(Yellow);
+        canvas.set_draw_color(yellow);
         canvas.copy(&texture, None, Some(target)).unwrap();
         //canvas.copy(&texture2, None, Some(target2)).unwrap();
         //canvas.fill_rect(positioned_retangle);

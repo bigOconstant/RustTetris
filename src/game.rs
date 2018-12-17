@@ -3,28 +3,12 @@ use std;
 use std::path::Path;
 ////use data::GameDataS;
 use board;
-
 use startmenu;
 use ::GAMEDATA;
-
-
-
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
-use sdl2::rect::Point;
 use std::time::Duration;
-use sdl2::rect::Rect;
-use sdl2::render::TextureQuery;
-use sdl2::pixels::Color;
 
-
-/*
-pub fps: i32,
-    pub width: i32,
-    pub height: i32,
-    pub fullscreen: bool,
-
-*/
 
 pub struct Game {
    
@@ -39,15 +23,7 @@ impl Game {
         //Mid point is 24. 
         // Each square is 1 by 1
         let mut falling = false;
-        let mut actualLevel = 1;
 
-        let sectionwidth = GAMEDATA.width / 3;
-        let sectionheight = GAMEDATA.height / 12;
-
-        let midpoint = GAMEDATA.width /2;
-
-        let unitSize = GAMEDATA.height / 27;
-    
         let sdl_context = sdl2::init().unwrap();
         let video_subsystem = sdl_context.video().unwrap();
 
@@ -62,13 +38,12 @@ impl Game {
             .unwrap();
 
         if GAMEDATA.fullscreen {
-            window.set_fullscreen(sdl2::video::FullscreenType::True);
+            window.set_fullscreen(sdl2::video::FullscreenType::True).expect("woops full screen didn't work");
         }
 
         let icon = sdl2::surface::Surface::load_bmp(Path::new("src/assets/tetris.bmp")).unwrap();
         window.set_icon(icon);
         let mut canvas = window.into_canvas().accelerated().build().unwrap();
-        let texture_creator = canvas.texture_creator();
 
         let mut timer = sdl_context.timer().unwrap();
         let mut fall_time = timer.ticks() as i32;
@@ -173,27 +148,27 @@ impl Game {
          
           // Calculate level speed
         /* calculate level, and speed*/
-            let mut earnedLevel = 1;
+            let mut earned_level = 1;
             if board.rows_cleared <= 0
             {
-                earnedLevel = 1;
+                earned_level = 1;
             }
             else if (board.rows_cleared >= 1) && (board.rows_cleared <= 90)
             {
-                earnedLevel = 1 + ((board.rows_cleared - 1) / 10);
+                earned_level = 1 + ((board.rows_cleared - 1) / 10);
             }
             else if board.rows_cleared >= 91
             {
-                earnedLevel = 10;
+                earned_level = 10;
             }
             //board.level_text = "level"
-            //earnedLevel = 15;
+            //earned_level = 15;
             
-          let iterationDelay = ((11.0 - earnedLevel as f32 ) as f32 * 0.05) * 1000.0;
+          let  iteration_delay = ((11.0 - earned_level as f32 ) as f32 * 0.05) * 1000.0;
           
 
 
-          if (ticks - fall_time) as f32 > iterationDelay {    
+          if (ticks - fall_time) as f32 >  iteration_delay {    
               falling = true;
               fall_time = ticks;
              
@@ -202,7 +177,7 @@ impl Game {
               
           }
           if !start{       
-              board.draw_board(&mut canvas,falling,earnedLevel);
+              board.draw_board(&mut canvas,falling,earned_level);
              
           }else{
               startmenu.draw_menu(&mut canvas);
