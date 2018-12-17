@@ -62,7 +62,7 @@ impl Level {
             top:GAMEDATA.height - (19*(GAMEDATA.height / 20))
         };
 
-        let target = Rect::new((dimentions.left - dimentions.unit_size *5) as i32,dimentions.top+dimentions.unit_size * 3,(dimentions.unit_size *8) as u32,(dimentions.unit_size * 3) as u32);
+        let target = Rect::new((dimentions.left - dimentions.unit_size *8) as i32,dimentions.top+dimentions.unit_size * 3,(dimentions.unit_size *6) as u32,(dimentions.unit_size * 3) as u32);
         let yellow: sdl2::pixels::Color = sdl2::pixels::Color::RGB(226, 244, 66);
         let green: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0, 179, 0);
 
