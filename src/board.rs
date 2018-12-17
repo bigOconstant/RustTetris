@@ -28,6 +28,7 @@ pub struct Board {
   pub players: Vec<player::Player>,
   pub level_text: level::Level,
   pub rows_cleared:i32,
+  pub score:i32,
 }
 
 impl Board {
@@ -81,7 +82,7 @@ impl Board {
         }
 
 
-      Board{bmatrix: Board_Pieces,preview_matrix:Preview_Board_Pieces,players:player_list,level_text:level::Level::new(),rows_cleared:0}
+      Board{bmatrix: Board_Pieces,preview_matrix:Preview_Board_Pieces,players:player_list,level_text:level::Level::new(),rows_cleared:0,score:0}
       
     }
 
@@ -354,11 +355,37 @@ impl Board {
               }
             }
           }
-       
      }
-     // add to score
-     //40 * (n + 1)	100 * (n + 1)	300 * (n + 1)	1200 * (n + 1)
-     println!("lines cleared:{}",scoring_rows_cleared);
+      self.calculate_score_of_Lines(scoring_rows_cleared);
+     println!("{} lines cleared current score:{}",scoring_rows_cleared,self.score);
+    }
+
+    pub fn calculate_level(&mut self)-> i32 {
+            let mut earnedLevel = 1;
+            if self.rows_cleared <= 0
+            {
+                earnedLevel = 1;
+            }
+            else if (self.rows_cleared >= 1) && (self.rows_cleared <= 90)
+            {
+                earnedLevel = 1 + ((self.rows_cleared - 1) / 10);
+            }
+            else if self.rows_cleared >= 91
+            {
+                earnedLevel = 10;
+            }
+      earnedLevel
+    }
+    pub fn calculate_score_of_Lines(&mut self,lines_cleared:i32){
+      let level = self.calculate_level();
+      let score = match lines_cleared {
+        1 =>  40 * (level + 1),
+        2 => 100 * (level + 1),
+        3 => 300 * (level + 1),
+        4 => 1200 * (level + 1),
+        _ => 0,     
+      };
+      self.score += score;
     }
 
     pub fn draw_board(&mut self, canvas: &mut sdl2::render::WindowCanvas,falling:bool,level_number:i32) {
@@ -366,8 +393,6 @@ impl Board {
         if falling {
           self.down_key();
         }
-
-     
         let dimentions:BDimentions = BDimentions{
         midpoint: GAMEDATA.width /2,
         unit_size:GAMEDATA.height / 20,
