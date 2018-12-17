@@ -406,9 +406,11 @@ impl Board {
        self.draw_a_player();
        self.draw_future_player();
        self.draw_pieces(canvas);
+      // self.draw_score(canvas,self.score);
        let mut level = String::from("Level ");
        level.push_str(&level_number.to_string());
        self.level_text.draw_level(canvas,level);
+       self.level_text.draw_score(canvas,self.score);
     }
 
    

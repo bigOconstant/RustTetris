@@ -116,6 +116,9 @@ impl Game {
                        if start{
                         start = !start;
                         playing = !playing;
+                       }else{
+                           start = !start;
+                           playing = !playing;
                        }
                     }
                     Event::KeyDown {
@@ -165,9 +168,7 @@ impl Game {
             //earned_level = 15;
             
           let  iteration_delay = ((11.0 - earned_level as f32 ) as f32 * 0.05) * 1000.0;
-          
-
-
+   
           if (ticks - fall_time) as f32 >  iteration_delay {    
               falling = true;
               fall_time = ticks;
@@ -184,10 +185,6 @@ impl Game {
           }
           canvas.present();
 
-
-
-
- 
             let frame_time = timer.ticks() as i32;
 
             let frame_time = frame_time - ticks;
