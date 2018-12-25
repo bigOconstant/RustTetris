@@ -193,6 +193,9 @@ impl Game {
                 let sleeptime = (frame_delay - frame_time) as u64;
                 std::thread::sleep(Duration::from_millis(sleeptime));
             }
+            if board.end {
+                
+            }
         }
     }
 }

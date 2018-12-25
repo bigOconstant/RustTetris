@@ -3,6 +3,8 @@ extern crate sdl2;
 use ::GAMEDATA;
 use player;
 use level;
+use BDimentions;
+
 //use sdl2::rect::Rect;
 use sdl2::rect::Point;
 
@@ -13,14 +15,6 @@ pub struct Piece{
   pub occupied:bool,
 
 }
-pub struct BDimentions{
- // midpoint:i32,
-  unit_size:i32,
-  left:i32,
-  right:i32,
-  bottom:i32,
-  top:i32,
-}
 
 pub struct Board {
   pub  bmatrix:  Vec<Vec<Piece>>,
@@ -29,6 +23,7 @@ pub struct Board {
   pub level_text: level::Level,
   pub rows_cleared:i32,
   pub score:i32,
+  pub end:bool,
 }
 
 impl Board {
@@ -43,19 +38,12 @@ impl Board {
       player_list.push(p2);
       player_list.push(p);
 
-      let dimentions:BDimentions = BDimentions{
-        //midpoint: GAMEDATA.width /2,
-        unit_size:GAMEDATA.height / 20,
-        left:(GAMEDATA.width /2) - (5 * (GAMEDATA.height / 20)),
-        right:(GAMEDATA.width /2) + (5 * (GAMEDATA.height / 20)),
-        bottom:GAMEDATA.height - (1*(GAMEDATA.height / 20)),
-        top:GAMEDATA.height - (19*(GAMEDATA.height / 20))
-      };
-
+      let dimentions = BDimentions::BDimentions::new();
+    
       let clr : sdl2::pixels::Color = blue;
 
       let mut board_pieces : Vec<Vec<Piece>> = Vec::new();
-            for j in 0..18{
+            for j in 0..20{
           let mut row: Vec<Piece> =  Vec::new();
           for i in 0..10{
             
@@ -82,7 +70,7 @@ impl Board {
         }
 
 
-      Board{bmatrix: board_pieces,preview_matrix:preview_board_pieces,players:player_list,level_text:level::Level::new(),rows_cleared:0,score:0}
+      Board{bmatrix: board_pieces,preview_matrix:preview_board_pieces,players:player_list,level_text:level::Level::new(),rows_cleared:0,score:0,end:false}
       
     }
 
@@ -90,12 +78,12 @@ impl Board {
           for i in &self.bmatrix{
             for j in i{
               canvas.set_draw_color(j.color);
-              canvas.fill_rect(j.rect).expect("could fill rectangle");;
+              canvas.fill_rect(j.rect).expect("could not fill rectangle");;
           }
           for i in &self.preview_matrix{
             for j in i{
               canvas.set_draw_color(j.color);
-              canvas.fill_rect(j.rect).expect("could fill rectangle");
+              canvas.fill_rect(j.rect).expect("could not fill rectangle");
           }
         }
     }}
@@ -177,7 +165,7 @@ impl Board {
       }
     }
 
-    fn draw_grid(&self,canvas: &mut sdl2::render::WindowCanvas,dimentions: BDimentions){
+    fn draw_grid(&self,canvas: &mut sdl2::render::WindowCanvas,dimentions: BDimentions::BDimentions){
          //Draw side lines
         canvas.draw_line(Point::new(dimentions.left,dimentions.top),Point::new(dimentions.left,dimentions.bottom)).expect("could not draw line");;
         canvas.draw_line(Point::new(dimentions.right,dimentions.top),Point::new(dimentions.right,dimentions.bottom)).expect("could not draw line");;
@@ -193,7 +181,7 @@ impl Board {
                              Point::new(dimentions.left+(i*dimentions.unit_size),dimentions.bottom)).expect("could not draw line");;
         }
 
-        for i in 1..19{
+        for i in 1..21{
             canvas.draw_line(Point::new(dimentions.left,dimentions.top + (i*dimentions.unit_size)),
                              Point::new(dimentions.right,dimentions.top +(i*dimentions.unit_size))).expect("could not draw line");          
 
@@ -240,7 +228,7 @@ impl Board {
             if col_address > 9 {
               return false;
             }
-            if row_address > 17  {
+            if row_address > 19  {
               return false;
             }
           } 
@@ -281,7 +269,21 @@ impl Board {
       let col = self.players[0].col;
       let row = self.players[0].row;
       let color = self.players[0].color;
+      let first = self.players[0].first_move;
+      
 
+      if first { // Test if fits, if it doesn't need to end game
+         let mut cloned_player = self.players[0].clone();
+         if self.is_occupied(cloned_player) {// game is over
+            self.end = true;
+
+         }
+         self.players[0].first_move = false;
+
+      }
+      
+
+      if !self.end{
       for i in 0..shape.len(){
        
         for j in 0..shape[i].len(){
@@ -295,7 +297,7 @@ impl Board {
         }
 
       }
-
+      }
      }
 
      pub fn draw_future_player(&mut self){
@@ -389,20 +391,13 @@ impl Board {
         if falling {
           self.down_key();
         }
-        let dimentions:BDimentions = BDimentions{
-        //midpoint: GAMEDATA.width /2,
-        unit_size:GAMEDATA.height / 20,
-        left:(GAMEDATA.width /2) - (5 * (GAMEDATA.height / 20)),
-        right:(GAMEDATA.width /2) + (5 * (GAMEDATA.height / 20)),
-        bottom:GAMEDATA.height - (1*(GAMEDATA.height / 20)),
-        top:GAMEDATA.height - (19*(GAMEDATA.height / 20))
-      };
+        let dimentions = BDimentions::BDimentions::new();
 
       let white: sdl2::pixels::Color = sdl2::pixels::Color::RGB(187, 190, 193);
 
 
        canvas.set_draw_color(white);
-       self.draw_grid(canvas,dimentions);
+       //self.draw_grid(canvas,dimentions);
        self.draw_a_player();
        self.draw_future_player();
        self.draw_pieces(canvas);

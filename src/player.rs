@@ -12,7 +12,8 @@ pub struct Player {
     pub shape3:Vec<Vec<i32>>,
     pub shape4:Vec<Vec<i32>>,
     pub color:sdl2::pixels::Color,
-    pub shape_state:i32
+    pub shape_state:i32,
+    pub first_move:bool,
 }
 
 impl Player{
@@ -26,6 +27,7 @@ impl Player{
     }
 
     pub fn down(&mut self){
+        self.first_move = false;
         self.decr();
     }
     pub fn left(&mut self){    
@@ -277,7 +279,8 @@ impl Player{
             shape3:s3,
             shape4:s4,
             color:clr,
-            shape_state:0
+            shape_state:0,
+            first_move:true
         }
     }
 
