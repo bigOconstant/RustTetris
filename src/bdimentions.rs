@@ -1,24 +1,28 @@
-
-use ::GAMEDATA;
 pub struct BDimentions{
- // midpoint:i32,
   pub unit_size:i32,
   pub left:i32,
   pub right:i32,
   pub bottom:i32,
   pub top:i32,
+  pub width:i32,
+  pub height:i32,
 }
 
 
 impl BDimentions {
     pub fn new() -> BDimentions {
+        let width = 1280;
+        let height = 720;
+
+
         BDimentions{
-        //midpoint: GAMEDATA.width /2,
-        unit_size:GAMEDATA.height / 22,
-        left:(GAMEDATA.width /2) - (5 * (GAMEDATA.height / 22)),
-        right:(GAMEDATA.width /2) + (5 * (GAMEDATA.height / 22)),
-        bottom:GAMEDATA.height - (1*(GAMEDATA.height / 22)),
-        top:GAMEDATA.height - (21*(GAMEDATA.height / 22))
+        unit_size:height / 22,
+        left:(width /2) - (5 * (height / 22)),
+        right:(width /2) + (5 * (height / 22)),
+        bottom:height - (1*(height / 22)),
+        top:height - (21*(height / 22)),
+        width:width,
+        height:height
       }
     }
 }

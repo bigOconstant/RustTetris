@@ -29,7 +29,7 @@ pub struct Board {
 impl Board {
 
     pub fn new() -> Board {
-
+    
       let blue: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
       let light_black: sdl2::pixels::Color = sdl2::pixels::Color::RGB(38, 37, 37);
       let p = player::Player::new();
@@ -355,7 +355,7 @@ impl Board {
           }
      }
       self.calculate_score_of_lines(scoring_rows_cleared);
-     println!("{} lines cleared current score:{}",scoring_rows_cleared,self.score);
+     //println!("{} lines cleared current score:{}",scoring_rows_cleared,self.score);
     }
 
     pub fn calculate_level(&mut self)-> i32 {

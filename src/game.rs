@@ -37,14 +37,19 @@ impl Game {
             .build()
             .unwrap();
 
+        
+
         if GAMEDATA.fullscreen {
             window.set_fullscreen(sdl2::video::FullscreenType::True).expect("woops full screen didn't work");
         }
 
         let icon = sdl2::surface::Surface::load_bmp(Path::new("src/assets/tetris.bmp")).unwrap();
         window.set_icon(icon);
+
         let mut canvas = window.into_canvas().accelerated().build().unwrap();
 
+        canvas.set_logical_size(1280,720);
+    
         let mut timer = sdl_context.timer().unwrap();
         let mut fall_time = timer.ticks() as i32;
         let mut event_pump = sdl_context.event_pump().unwrap();
@@ -57,8 +62,9 @@ impl Game {
            // bb.initboard();
            let mut start = true;
            let mut playing = false;
-
+    
         while running {
+            let ticks = timer.ticks() as i32;
             for event in event_pump.poll_iter() {
                 match event {
                     Event::Quit { .. }
@@ -73,6 +79,7 @@ impl Game {
                         ..
                     } => {
                         if playing {
+                            fall_time = ticks;
                             board.drop_piece();
                         }
                     }
@@ -135,15 +142,12 @@ impl Game {
                     } => {
                         if playing {
                          board.down_key();
+                         fall_time = ticks;
                          }
                     }
                     _ => {}
                 }
             }
-
-
-            let ticks = timer.ticks() as i32;
-           
 
           canvas.clear();
           canvas.set_draw_color(sdl2::pixels::Color::RGB(38, 37, 37));      
