@@ -96,6 +96,7 @@ impl Game {
                         ..
                     } => {
                         if playing {
+                            fall_time = ticks;
                             board = board::Board::new();
                         }
                     }
