@@ -49,7 +49,7 @@ impl Board {
             
               let positioned_retangle : sdl2::rect::Rect = sdl2::rect::Rect::new(2+dimentions.left +
                       (i * dimentions.unit_size), dimentions.top+2+(dimentions.unit_size * j),
-                      (dimentions.unit_size -3) as u32,(dimentions.unit_size -3) as u32);
+                      (dimentions.unit_size -1) as u32,(dimentions.unit_size -1) as u32);
             let p:Piece = Piece{rect:positioned_retangle,color:clr,occupied:false};
             row.push(p);
           }
@@ -62,7 +62,7 @@ impl Board {
           for i in 0..4{
             let positioned_retangle_right : sdl2::rect::Rect = sdl2::rect::Rect::new(2+dimentions.right + dimentions.unit_size +
                       (i * dimentions.unit_size), dimentions.top+2+(dimentions.unit_size * j),
-                      (dimentions.unit_size -3) as u32,(dimentions.unit_size -3) as u32);
+                      (dimentions.unit_size -1) as u32,(dimentions.unit_size -1) as u32);
                       row.push(Piece{rect:positioned_retangle_right,color:light_black,occupied:false})
           }
           preview_board_pieces.push(row);
