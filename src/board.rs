@@ -89,7 +89,7 @@ impl Board {
     }}
 
 
-    pub fn down_key(&mut self){
+    pub fn down_key(&mut self,point:bool){
       
       let mut cloned_player = self.players[0].clone();
       cloned_player.decr();
@@ -98,6 +98,9 @@ impl Board {
           self.delete_piece();
         if !self.is_occupied(cloned_player){
           self.players[0].decr();
+          if point {
+            self.score += 1; // Give a point for user dropping to the next square
+          }
         }else{
          self.draw_a_player();
          self.switch_piece();// end turn 
@@ -112,7 +115,7 @@ impl Board {
        self.delete_piece();
        if self.do_i_fit(&cloned_player){
          if !self.is_occupied(cloned_player){
-           self.down_key();
+           self.down_key(true);
            self.drop_piece();
          }
        } else{
@@ -389,7 +392,7 @@ impl Board {
     pub fn draw_board(&mut self, canvas: &mut sdl2::render::WindowCanvas,falling:bool,level_number:i32) {
 
         if falling {
-          self.down_key();
+          self.down_key(false);
         }
         let dimentions = BDimentions::BDimentions::new();
 

@@ -141,7 +141,7 @@ impl Game {
                         ..
                     } => {
                         if playing {
-                         board.down_key();
+                         board.down_key(true);
                          fall_time = ticks;
                          }
                     }
