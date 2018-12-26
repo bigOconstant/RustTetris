@@ -279,7 +279,6 @@ impl Board {
          let mut cloned_player = self.players[0].clone();
          if self.is_occupied(cloned_player) {// game is over
             self.end = true;
-            println!("Game is over!");
 
          }
          self.players[0].first_move = false;
