@@ -279,6 +279,7 @@ impl Board {
          let mut cloned_player = self.players[0].clone();
          if self.is_occupied(cloned_player) {// game is over
             self.end = true;
+            println!("Game is over!");
 
          }
          self.players[0].first_move = false;
@@ -391,7 +392,7 @@ impl Board {
 
     pub fn draw_board(&mut self, canvas: &mut sdl2::render::WindowCanvas,falling:bool,level_number:i32) {
 
-        if falling {
+        if falling && !self.end{
           self.down_key(false);
         }
         let dimentions = BDimentions::BDimentions::new();

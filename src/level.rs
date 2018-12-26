@@ -68,8 +68,6 @@ impl Level {
         canvas.copy(&texture, None, Some(target)).unwrap();
         // End top half
 
-        
-
         let surface = font.render(&score.to_string()).blended(green).unwrap();
         let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
         let TextureQuery { width, height, .. } = texture.query();

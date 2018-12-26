@@ -182,7 +182,7 @@ impl Game {
               falling = false;
               
           }
-          if !start{       
+          if !start {       
               board.draw_board(&mut canvas,falling,earned_level);
              
           }else{
