@@ -79,7 +79,7 @@ impl Game {
                         ..
                     } => {
                         if playing && !board.end{
-                            fall_time = ticks;
+                            fall_time = 0;
                             board.drop_piece();
                         }
                     }
