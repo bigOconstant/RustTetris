@@ -34,7 +34,7 @@ Windows users may use the build.rs script in the main directory and the included
 
 ### Installing
 
-To build and run the project, cd into the src directory and type 
+To build and run the project, cd into the root directory and type 
 
 ```
 cargo run
