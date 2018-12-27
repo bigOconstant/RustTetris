@@ -1,12 +1,10 @@
 
 extern crate sdl2;
-use ::GAMEDATA;
 use player;
 use level;
-use BDimentions;
+use bdimentions;
 use gameend;
-//use sdl2::rect::Rect;
-use sdl2::rect::Point;
+
 
 #[derive(Clone)]
 pub struct Piece{
@@ -38,7 +36,7 @@ impl Board {
       player_list.push(p2);
       player_list.push(p);
 
-      let dimentions = BDimentions::BDimentions::new();
+      let dimentions = bdimentions::Bdimentions::new();
     
       let clr : sdl2::pixels::Color = blue;
 
@@ -174,34 +172,11 @@ impl Board {
       }
     }
 
-    fn draw_grid(&self,canvas: &mut sdl2::render::WindowCanvas,dimentions: BDimentions::BDimentions){
-         //Draw side lines
-        canvas.draw_line(Point::new(dimentions.left,dimentions.top),Point::new(dimentions.left,dimentions.bottom)).expect("could not draw line");;
-        canvas.draw_line(Point::new(dimentions.right,dimentions.top),Point::new(dimentions.right,dimentions.bottom)).expect("could not draw line");;
-          //draw top and bottom
-
-        canvas.draw_line(Point::new(dimentions.left,dimentions.top),Point::new(dimentions.right,dimentions.top)).expect("could not draw line");;         
-        canvas.draw_line(Point::new(dimentions.left,dimentions.bottom),Point::new(dimentions.right,dimentions.bottom)).expect("could not draw line");;
-
-
-        for i in 1..11 {
-         
-            canvas.draw_line(Point::new(dimentions.left+(i*dimentions.unit_size),dimentions.top),
-                             Point::new(dimentions.left+(i*dimentions.unit_size),dimentions.bottom)).expect("could not draw line");;
-        }
-
-        for i in 1..21{
-            canvas.draw_line(Point::new(dimentions.left,dimentions.top + (i*dimentions.unit_size)),
-                             Point::new(dimentions.right,dimentions.top +(i*dimentions.unit_size))).expect("could not draw line");          
-
-        }
-    }
       fn delete_piece(&mut self) {
         let blue: sdl2::pixels::Color = sdl2::pixels::Color::RGB(91, 89, 89);
         let shape = &self.players[0].get_shape();;
         let col = self.players[0].col;
         let row = self.players[0].row;
-        let color = self.players[0].color;
         let mut icount = 0;
         for i in 0..shape.len(){
           let mut jcount = 0;
@@ -282,7 +257,7 @@ impl Board {
       
 
       if first { // Test if fits, if it doesn't need to end game
-         let mut cloned_player = self.players[0].clone();
+         let cloned_player = self.players[0].clone();
          if self.is_occupied(cloned_player) {// game is over
             self.end = true;
 
@@ -311,8 +286,6 @@ impl Board {
 
      pub fn draw_future_player(&mut self){
        let shape = &self.players[1].get_shape();
-      let col = self.players[1].col;
-      let row = self.players[1].row;
       let color = self.players[1].color;
 
       for i in 0..shape.len(){
@@ -400,13 +373,12 @@ impl Board {
         if falling && !self.end{
           self.down_key(false);
         }
-        let dimentions = BDimentions::BDimentions::new();
 
-      let white: sdl2::pixels::Color = sdl2::pixels::Color::RGB(187, 190, 193);
+        let white: sdl2::pixels::Color = sdl2::pixels::Color::RGB(187, 190, 193);
 
-        let  end_screen = gameend::gameend::new();
+        let  end_screen = gameend::Gameend::new();
        canvas.set_draw_color(white);
-       //self.draw_grid(canvas,dimentions);
+
        self.draw_a_player();
        self.draw_future_player();
        self.draw_pieces(canvas);

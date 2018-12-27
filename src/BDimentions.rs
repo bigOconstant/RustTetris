@@ -1,4 +1,4 @@
-pub struct BDimentions{
+pub struct Bdimentions{
   pub unit_size:i32,
   pub left:i32,
   pub right:i32,
@@ -9,13 +9,13 @@ pub struct BDimentions{
 }
 
 
-impl BDimentions {
-    pub fn new() -> BDimentions {
+impl Bdimentions {
+    pub fn new() -> Bdimentions {
         let width = 1280;
         let height = 720;
 
 
-        BDimentions{
+        Bdimentions{
         unit_size:height / 22,
         left:(width /2) - (5 * (height / 22)),
         right:(width /2) + (5 * (height / 22)),

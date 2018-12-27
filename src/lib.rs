@@ -21,7 +21,7 @@ pub mod game;
 pub mod board;
 pub mod startmenu;
 pub mod level;
-pub mod BDimentions;
+pub mod bdimentions;
 pub mod gameend;
 
 pub mod player;

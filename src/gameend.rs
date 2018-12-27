@@ -1,30 +1,27 @@
 extern crate sdl2;
-use BDimentions;
+use bdimentions;
 use sdl2::rect::Rect;
 use sdl2::render::TextureQuery;
 
 
 
-pub struct gameend {}
-// Here we need to draw our start menu with the navas object
-impl gameend {
-    pub fn new() -> gameend{
-
-        gameend{}
+pub struct Gameend {}
+impl Gameend {
+    pub fn new() -> Gameend{
+        Gameend{}
     }
 
     pub fn draw_end(&self,canvas: &mut sdl2::render::WindowCanvas){
      
-        let dimentions = BDimentions::BDimentions::new();
+        let dimentions = bdimentions::Bdimentions::new();
         let white: sdl2::pixels::Color = sdl2::pixels::Color::RGB(191, 191, 191);
-        let pink: sdl2::pixels::Color = sdl2::pixels::Color::RGB(244, 66, 170);
         let texture_creator = canvas.texture_creator();
 
         // Load a font
         let ttf_context = sdl2::ttf::init().unwrap();
         let font = ttf_context.load_font("src/assets/Roboto-Regular.ttf", 128).unwrap();
-        let mut score_string = "Game Over".to_string();
-        //score_string.push_str(&score.to_string());
+        let score_string = "Game Over".to_string();
+
         let surface = font.render(&score_string).blended(white).unwrap();
         let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
 

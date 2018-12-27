@@ -2,7 +2,7 @@ extern crate sdl2;
 
 use sdl2::rect::Rect;
 use sdl2::render::TextureQuery;
-use BDimentions;
+use bdimentions;
 
 
 pub struct Level {
@@ -20,20 +20,15 @@ impl Level {
         // Draw some retangles here!    
         let white: sdl2::pixels::Color = sdl2::pixels::Color::RGB(191, 191, 191);
 
+        let dimentions = bdimentions::Bdimentions::new();
 
-         let dimentions = BDimentions::BDimentions::new();
-
-        
-        
         let yellow: sdl2::pixels::Color = sdl2::pixels::Color::RGB(226, 244, 66);
-        let green: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0, 179, 0);
         let texture_creator = canvas.texture_creator();
 
         // Load a font
         let ttf_context = sdl2::ttf::init().unwrap();
         let font = ttf_context.load_font("src/assets/Roboto-Regular.ttf", 128).unwrap();
-        let mut score_string = "Score".to_string();
-        //score_string.push_str(&score.to_string());
+
         let surface = font.render(&level_string).blended(white).unwrap();
         let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
 
@@ -42,23 +37,21 @@ impl Level {
         canvas.set_draw_color(yellow);
         canvas.copy(&texture, None, Some(target)).unwrap();
 
-        
     }
 
     pub fn draw_score(&self,canvas: &mut sdl2::render::WindowCanvas,score:i32) {
-        let dimentions = BDimentions::BDimentions::new();
+        let dimentions = bdimentions::Bdimentions::new();
 
         
         let white: sdl2::pixels::Color = sdl2::pixels::Color::RGB(191, 191, 191);
         let yellow: sdl2::pixels::Color = sdl2::pixels::Color::RGB(226, 244, 66);
-        let green: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0, 179, 0);
         let texture_creator = canvas.texture_creator();
 
         // Load a font
         let ttf_context = sdl2::ttf::init().unwrap();
         let font = ttf_context.load_font("src/assets/Roboto-Regular.ttf", 128).unwrap();
-        let mut score_string = "Score".to_string();
-        //score_string.push_str(&score.to_string());
+        let score_string = "Score".to_string();
+
         let surface = font.render(&score_string).blended(white).unwrap();
         let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
 

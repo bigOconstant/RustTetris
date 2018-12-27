@@ -18,11 +18,7 @@ impl Game {
 
     pub fn run_game(&self) {
 
-        //Expect 16 by 9 ratio multiplying by 3 for scaling
-        //48 by 27
-        //Mid point is 24. 
-        // Each square is 1 by 1
-        let mut falling = false;
+        let mut falling;
 
         let sdl_context = sdl2::init().unwrap();
         let video_subsystem = sdl_context.video().unwrap();
@@ -48,7 +44,7 @@ impl Game {
 
         let mut canvas = window.into_canvas().accelerated().build().unwrap();
 
-        canvas.set_logical_size(1280,720);
+        canvas.set_logical_size(1280,720).expect("could not set logical size");;
     
         let mut timer = sdl_context.timer().unwrap();
         let mut fall_time = timer.ticks() as i32;
