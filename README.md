@@ -19,10 +19,14 @@ Currently Ubuntu 18.04 and Windows are supported. Because thats what I'm testing
 
 ### Prerequisites
 
-You will need the latest stable version of rust. You will also need sdl2 development libraries if you are on ubuntu. which you can install with.
+You will need the latest stable version of rust. You will also need sdl2 and sdl2-ttf development libraries along  if you are on ubuntu. which you can install with.
 
 ```
 sudo apt-get install libsdl2-dev
+```
+
+```
+sudo apt-get install libsdl2-ttf-dev
 ```
 
 Windows users may use the build.rs script in the main directory and the included sdl libraries.
