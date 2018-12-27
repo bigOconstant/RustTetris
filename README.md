@@ -37,8 +37,7 @@ Cargo will go out and gather the needed dependencies, build and launch tetris.
 
 Use the left, right, and down arrow keys for navigation.
 The up key rotates the piece. The space bar lands the piece at the bottom.
-Currently the a key creates a new piece but will be removed later.
-The r key resets the board.
+The r key resets the board. Press enter to pause the game. Esc exits the game.
 
 ## Built With
 
