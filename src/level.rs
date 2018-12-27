@@ -18,7 +18,7 @@ impl Level {
 
     pub fn draw_level(&self,canvas: &mut sdl2::render::WindowCanvas,level_string:String) {
         // Draw some retangles here!    
-
+        let white: sdl2::pixels::Color = sdl2::pixels::Color::RGB(191, 191, 191);
 
 
          let dimentions = BDimentions::BDimentions::new();
@@ -34,7 +34,7 @@ impl Level {
         let font = ttf_context.load_font("src/assets/Roboto-Regular.ttf", 128).unwrap();
         let mut score_string = "Score".to_string();
         //score_string.push_str(&score.to_string());
-        let surface = font.render(&level_string).blended(green).unwrap();
+        let surface = font.render(&level_string).blended(white).unwrap();
         let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
 
         let TextureQuery { width, height, .. } = texture.query();
@@ -49,7 +49,7 @@ impl Level {
         let dimentions = BDimentions::BDimentions::new();
 
         
-        
+        let white: sdl2::pixels::Color = sdl2::pixels::Color::RGB(191, 191, 191);
         let yellow: sdl2::pixels::Color = sdl2::pixels::Color::RGB(226, 244, 66);
         let green: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0, 179, 0);
         let texture_creator = canvas.texture_creator();
@@ -59,7 +59,7 @@ impl Level {
         let font = ttf_context.load_font("src/assets/Roboto-Regular.ttf", 128).unwrap();
         let mut score_string = "Score".to_string();
         //score_string.push_str(&score.to_string());
-        let surface = font.render(&score_string).blended(green).unwrap();
+        let surface = font.render(&score_string).blended(white).unwrap();
         let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
 
         let TextureQuery { width, height, .. } = texture.query();
@@ -68,7 +68,7 @@ impl Level {
         canvas.copy(&texture, None, Some(target)).unwrap();
         // End top half
 
-        let surface = font.render(&score.to_string()).blended(green).unwrap();
+        let surface = font.render(&score.to_string()).blended(white).unwrap();
         let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
         let TextureQuery { width, height, .. } = texture.query();
 

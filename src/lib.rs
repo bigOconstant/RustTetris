@@ -22,14 +22,8 @@ pub mod board;
 pub mod startmenu;
 pub mod level;
 pub mod BDimentions;
+pub mod gameend;
 
 pub mod player;
 
-//Ignore mod test it was auto generated
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-}
+

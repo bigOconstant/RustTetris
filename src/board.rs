@@ -4,7 +4,7 @@ use ::GAMEDATA;
 use player;
 use level;
 use BDimentions;
-
+use gameend;
 //use sdl2::rect::Rect;
 use sdl2::rect::Point;
 
@@ -78,7 +78,7 @@ impl Board {
           for i in &self.bmatrix{
             for j in i{
               canvas.set_draw_color(j.color);
-              canvas.fill_rect(j.rect).expect("could not fill rectangle");;
+              canvas.fill_rect(j.rect).expect("could not fill rectangle");
           }
           for i in &self.preview_matrix{
             for j in i{
@@ -398,7 +398,7 @@ impl Board {
 
       let white: sdl2::pixels::Color = sdl2::pixels::Color::RGB(187, 190, 193);
 
-
+        let  end_screen = gameend::gameend::new();
        canvas.set_draw_color(white);
        //self.draw_grid(canvas,dimentions);
        self.draw_a_player();
@@ -409,6 +409,11 @@ impl Board {
        level.push_str(&level_number.to_string());
        self.level_text.draw_level(canvas,level);
        self.level_text.draw_score(canvas,self.score);
+       
+       if self.end {
+          end_screen.draw_end(canvas);
+        }
+    
     }
 
    
