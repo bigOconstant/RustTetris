@@ -117,6 +117,8 @@ impl Board {
          if !self.is_occupied(cloned_player){
            self.down_key(true);
            self.drop_piece();
+         }else{
+           self.draw_a_player();
          }
        } else{
          self.draw_a_player();
@@ -153,6 +155,8 @@ impl Board {
          self.delete_piece();
         if !self.is_occupied(cloned_player){
           self.players[0].left();
+        }else{
+          self.draw_a_player();
         }
       }
     }
@@ -164,6 +168,8 @@ impl Board {
           self.delete_piece();
         if !self.is_occupied(cloned_player){
          self.players[0].right();
+        }else{
+          self.draw_a_player();
         }
       }
     }
