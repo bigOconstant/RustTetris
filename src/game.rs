@@ -78,7 +78,7 @@ impl Game {
                         keycode: Some(Keycode::Space),
                         ..
                     } => {
-                        if playing {
+                        if playing && !board.end{
                             fall_time = ticks;
                             board.drop_piece();
                         }
@@ -87,7 +87,7 @@ impl Game {
                         keycode: Some(Keycode::Left),
                         ..
                     } => {
-                        if playing {
+                        if playing && !board.end {
                             board.down_left();
                         }
                     }
@@ -105,18 +105,11 @@ impl Game {
                         keycode: Some(Keycode::Right),
                         ..
                     } => {
-                        if playing {
+                        if playing && !board.end {
                             board.down_right();
                         }
                     }
-                    Event::KeyDown {
-                        keycode: Some(Keycode::A),
-                        ..
-                    } => {
-                        if playing {
-                            board.switch_piece();
-                        }
-                    }
+
                     Event::KeyDown {
                         keycode: Some(Keycode::Return),
                         ..
@@ -133,7 +126,7 @@ impl Game {
                         keycode: Some(Keycode::Up),
                         ..
                     } => {
-                        if playing {
+                        if playing && !board.end {
                             board.up_key();
                         }
                     }
@@ -141,7 +134,7 @@ impl Game {
                         keycode: Some(Keycode::Down),
                         ..
                     } => {
-                        if playing {
+                        if playing && !board.end{
                          board.down_key(true);
                          fall_time = ticks;
                          }
