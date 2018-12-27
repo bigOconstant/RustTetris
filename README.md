@@ -8,10 +8,10 @@ This app aims to be a complete low level Tetris clone written in Rust and SDL2. 
 Scoring and game play similar to the NES version of the game. The code is based off of the 
 typescript Tetris prototype I've previously written.Only with better game logic more consistent with the nes version of the game. You can see that version here [TypeScript Tetris](https://camccar.github.io/tetris/) 
 
-## Download for windows
+## Download for Windows
 
-Version 1.0 is now available for windows 10 64bit. You can download it [here](https://github.com/camccar/RustTetris/releases/download/1.0/rust-tetris-release-1.zip).
-Unzip the file rust-tetris-release-1.zip click into the folder and double click on rusttetris.exe.
+Version 1.0 is now available for windows 10 64bit. You can download it [here](https://github.com/camccar/RustTetris/releases/download/1.0/rust-tetris-release-1.zip). or find it in the [release section](https://github.com/camccar/RustTetris/releases).
+Unzip the file rust-tetris-release-1.zip click into the folder and double click on rusttetris.exe.git
 
 ## Getting Started
 
