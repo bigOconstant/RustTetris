@@ -10,7 +10,7 @@ typescript Tetris prototype I've previously written.Only with better game logic 
 
 ## Download for Windows
 
-Version 1.0 is now available for windows 10 64bit. You can download it [here](https://github.com/camccar/RustTetris/releases/download/1.0/rust-tetris-release-1.zip). or find it in the [release section](https://github.com/camccar/RustTetris/releases).
+Version 1.0 is now available for windows 10 64bit. You can download it [here](https://github.com/camccar/RustTetris/releases/download/1.02/rust-tetris-release-1.zip). or find it in the [release section](https://github.com/camccar/RustTetris/releases).
 Unzip the file rust-tetris-release-1.zip click into the folder and double click on rusttetris.exe
 
 ## Getting Started
