@@ -22,7 +22,7 @@ impl Startmenu {
         let dimentions = BDimentions::BDimentions::new();
 
         
-        
+        let white: sdl2::pixels::Color = sdl2::pixels::Color::RGB(191, 191, 191);
         let yellow: sdl2::pixels::Color = sdl2::pixels::Color::RGB(226, 244, 66);
         let green: sdl2::pixels::Color = sdl2::pixels::Color::RGB(0, 179, 0);
         let texture_creator = canvas.texture_creator();
@@ -32,7 +32,7 @@ impl Startmenu {
         let font = ttf_context.load_font("src/assets/Roboto-Regular.ttf", 128).unwrap();
         let mut score_string = "Press Enter to Play".to_string();
         //score_string.push_str(&score.to_string());
-        let surface = font.render(&score_string).blended(green).unwrap();
+        let surface = font.render(&score_string).blended(white).unwrap();
         let texture = texture_creator.create_texture_from_surface(&surface).unwrap();
 
 
