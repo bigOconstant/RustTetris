@@ -68,4 +68,5 @@ The default resolution is set to 720 windowed; However you may change this along
 ## Acknowledgments
 
 * [Colin Fahey's great Tetris documentation](https://www.colinfahey.com/tetris/tetris.html)
+* [The Tetris Wiki](http://tetris.wikia.com/wiki/Tetris_Wiki)
 
