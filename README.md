@@ -48,6 +48,10 @@ Use the left, right, and down arrow keys for navigation.
 The up key rotates the piece. The space bar lands the piece at the bottom.
 The r key resets the board. Press enter to pause the game. Esc exits the game.
 
+### Resolution and fullscreen
+
+The default resolution is set to 720 windowed; However you may change this along with the fps in the src/assets/jata.json file.
+
 ## Built With
 
 * [Rust](https://www.rust-lang.org/en-US/) - Programming Language
