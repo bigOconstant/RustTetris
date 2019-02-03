@@ -42,11 +42,20 @@ cargo run
 
 Cargo will go out and gather the needed dependencies, build and launch tetris.
 
-### Controlls
+## Controlls
+
+### Keyboard
 
 Use the left, right, and down arrow keys for navigation.
 The up key rotates the piece. The space bar lands the piece at the bottom.
 The r key resets the board. Press enter to pause the game. Esc exits the game.
+
+### Gamepad
+SDL Gamepad support. Most gamepads should work. The xbox buttons should be the following,
+a,b,up are change piece state.
+x and y are drop piece.
+up, down, left, right behave exactly as the keyboard does.
+Sholder buttons should move the piece either one space to the left or one space to the right.
 
 ### Resolution and fullscreen
 
