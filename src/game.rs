@@ -22,6 +22,28 @@ impl Game {
 
         let sdl_context = sdl2::init().unwrap();
         let video_subsystem = sdl_context.video().unwrap();
+        let joystick_subsystem = sdl_context.joystick().unwrap();
+
+        let available =
+        match joystick_subsystem.num_joysticks() {
+            Ok(n)  => n,
+            Err(e) => panic!("can't enumerate joysticks: {}", e),
+        };
+
+    //println!("{} joysticks available", available);
+    let mut joystick = None;
+    for id in 0..available {
+        match joystick_subsystem.open(id) {
+            Ok(c) => {
+                //println!("Success: opened \"{}\"", c.name());
+                joystick = Some(c);
+                break;
+            },
+            Err(e) =>{}, //println!("failed: {:?}", e),
+        }
+    }
+   
+
 
         let mut window = video_subsystem
             .window(
@@ -70,6 +92,7 @@ impl Game {
                     } => {
                         running = false;
                     }
+                    
                     Event::KeyDown {
                         keycode: Some(Keycode::Space),
                         ..
@@ -78,7 +101,85 @@ impl Game {
                             fall_time = 0;
                             board.drop_piece();
                         }
-                    }
+                    },
+                    
+                    Event::JoyButtonUp{ button_idx, .. } =>{
+                    
+                            match button_idx {
+                                0=>{
+                                    if playing && !board.end {
+                                        board.up_key();
+                                     }
+                                },
+                                1 => {
+                                     if playing && !board.end {
+                                        board.up_key();
+                                     }
+                                },
+                                7 => {
+                                   if start{
+                                        start = !start;
+                                        playing = !playing;
+                                    }else{
+                                        start = !start;
+                                        playing = !playing;
+                                    }
+                                },
+                                2 => {
+                                   if playing && !board.end{
+                                        fall_time = 0;
+                                        board.drop_piece();
+                                    } 
+                                }
+                                6 => {
+                                    running = false;
+                                },
+                                4 => {
+                                    if playing && !board.end {
+                                        board.down_left();
+                                    }
+                                },
+                                5 => {
+                                    if playing && !board.end {
+                                    board.down_right();
+                                }},
+                                3 => {
+                                    if playing && !board.end{
+                                        fall_time = 0;
+                                        board.drop_piece();
+                                    } 
+                                }
+                                
+                                _=>{}
+                            }
+                    },
+                    Event::JoyHatMotion{ hat_idx, state, .. } =>{
+                        match state{
+                            sdl2::joystick::HatState::Up =>{
+                               if playing && !board.end {
+                                        board.up_key();
+                                     }
+                            },
+                            sdl2::joystick::HatState::Down =>{
+                                if playing && !board.end{
+                                    board.down_key(true);
+                                    fall_time = ticks;
+                                }
+                            },
+                            sdl2::joystick::HatState::Right =>{
+                                if playing && !board.end {
+                                    board.down_right();
+                                }
+                            },
+                            sdl2::joystick::HatState::Left =>{
+                                if playing && !board.end {
+                                    board.down_left();
+                                }
+                            },
+                            _ => {}
+                        }
+
+                    },
                     Event::KeyDown {
                         keycode: Some(Keycode::Left),
                         ..
@@ -86,7 +187,7 @@ impl Game {
                         if playing && !board.end {
                             board.down_left();
                         }
-                    }
+                    },
                     Event::KeyDown {
                         keycode: Some(Keycode::R),
                         ..
@@ -122,9 +223,7 @@ impl Game {
                         keycode: Some(Keycode::Up),
                         ..
                     } => {
-                        if playing && !board.end {
-                            board.up_key();
-                        }
+                        
                     }
                     Event::KeyDown {
                         keycode: Some(Keycode::Down),
