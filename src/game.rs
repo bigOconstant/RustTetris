@@ -223,7 +223,9 @@ impl Game {
                         keycode: Some(Keycode::Up),
                         ..
                     } => {
-                        
+                        if playing && !board.end {
+                                        board.up_key();
+                                     }
                     }
                     Event::KeyDown {
                         keycode: Some(Keycode::Down),
