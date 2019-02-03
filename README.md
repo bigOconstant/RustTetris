@@ -57,11 +57,11 @@ x and y are drop piece.
 up, down, left, right behave exactly as the keyboard does.
 Sholder buttons should move the piece either one space to the left or one space to the right.
 
-### Resolution and fullscreen
+## Resolution and fullscreen
 
 The default resolution is set to 720 windowed; However you may change this along with the fps in the src/assets/jata.json file.
 
-## Built With
+### Built With
 
 * [Rust](https://www.rust-lang.org/en-US/) - Programming Language
 * [Rust SDL](https://github.com/Rust-SDL2/rust-sdl2) - The Graphics Library wrapper written in rust
@@ -69,12 +69,12 @@ The default resolution is set to 720 windowed; However you may change this along
 
 
 
-## Authors
+### Authors
 
 * **Caleb McCarthy** - [Web Site](http://calebmccarthy.io)
 .
 
-## Acknowledgments
+### Acknowledgments
 
 * [Colin Fahey's great Tetris documentation](https://www.colinfahey.com/tetris/tetris.html)
 * [The Tetris Wiki](http://tetris.wikia.com/wiki/Tetris_Wiki)
