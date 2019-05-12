@@ -21,6 +21,7 @@ impl Game {
         let mut falling;
 
         let sdl_context = sdl2::init().unwrap();
+     
         let video_subsystem = sdl_context.video().unwrap();
         let joystick_subsystem = sdl_context.joystick().unwrap();
 
@@ -276,7 +277,7 @@ impl Game {
               board.draw_board(&mut canvas,falling,earned_level);
              
           }else{
-              startmenu.draw_menu(&mut canvas);
+              startmenu.draw_menu(&mut canvas,  &sdl_context);
           }
           canvas.present();
 
