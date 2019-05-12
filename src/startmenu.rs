@@ -44,7 +44,7 @@ impl Startmenu {
         let frames_per_anim = 6;
         let mut sprite_tile_size = (100,70);
 
-        let mut source_rect_0 = Rect::new(25, 150, sprite_tile_size.0, sprite_tile_size.1);
+        let mut source_rect_0 = Rect::new(25, 155, sprite_tile_size.0, sprite_tile_size.1);
         let mut dest_rect_0 = Rect::new(10, 10, sprite_tile_size.0, sprite_tile_size.1);
        
         let mut timer = context.timer().unwrap();
@@ -58,8 +58,8 @@ impl Startmenu {
             0=> source_rect_0.set_x(25),
             1 => {source_rect_0.set_x(25 + (100))},
             2 => {source_rect_0.set_x(35 + (100 * 2))},
-            3 => {source_rect_0.set_x(44 + (100 * 3))},
-            4 => {source_rect_0.set_x(52 + (100 * 4))},
+            3 => {source_rect_0.set_x(47 + (100 * 3))},
+            4 => {source_rect_0.set_x(55 + (100 * 4))},
             5 => {source_rect_0.set_x(57 + (100 * 5))},
             _ => {source_rect_0.set_x(54 + (100 * 5))},
         } ;
