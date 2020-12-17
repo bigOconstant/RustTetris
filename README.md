@@ -29,6 +29,11 @@ sudo apt-get install libsdl2-dev
 sudo apt-get install libsdl2-ttf-dev
 ```
 
+```
+sudo apt-get install libsdl2-image-dev
+
+```
+
 Windows users may use the build.rs script in the main directory and the included sdl libraries.
 
 
